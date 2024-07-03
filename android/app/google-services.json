@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "350890451296",
+    "project_id": "sreebalajigold-admin",
+    "storage_bucket": "sreebalajigold-admin.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:350890451296:android:f35aacacb6884f7f143e05",
+        "android_client_info": {
+          "package_name": "com.SreeBalagiGold"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "350890451296-qr8ss257saq1nt5bj4i360fkp5v6ouij.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAj1T5dN7jjkuofnVsU-9mIR8qRJg1HrW8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "350890451296-qr8ss257saq1nt5bj4i360fkp5v6ouij.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

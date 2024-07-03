@@ -1,29 +1,6 @@
 const bri = 'assets/images/';
 
-String logo = '${bri}logo.png';
-String goldPot = '${bri}goldpot.png';
-String loginImage = '${bri}login.png';
-String otpImage = '${bri}otp.png';
-String home = '${bri}home.png';
-String myorder = '${bri}database.png';
-String bell = '${bri}bell.png';
-String catagory = '${bri}apps.png';
-String cart = '${bri}cart.png';
-String home2 = '${bri}home1.png';
-String myorder2 = '${bri}database2.png';
-String bell2 = '${bri}bell2.png';
-String catagory2 = '${bri}apps2.png';
-String cart2 = '${bri}cart2.png';
-String drawer = '${bri}drawer.png';
-String exit = '${bri}Exit.png';
-String help = '${bri}Help.png';
-String insurance = '${bri}Insurance.png';
-String rating = '${bri}Rating.png';
-String share = '${bri}Share.png';
-String termsCondition = '${bri}T&C.png';
-String phone = '${bri}call.png';
-String about = '${bri}i.png';
-String update = '${bri}Refresh.png';
-String whatsapp = '${bri}watsapp.png';
-String tick = '${bri}oktick.png';
-String notifyTime = '${bri}notifytime.png';
+class AppImages {
+  static const pendingApprovalIcon = '${bri}pending_approval_icon.png';
+  static const rejectedApproval = '${bri}rejected_approval.png';
+}

@@ -1,12 +1,18 @@
 import 'dart:core';
-
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:sree_balagi_gold/features/splash_screen.dart/presentation/view/splash2.dart';
+import 'package:provider/provider.dart';
+import 'package:sree_balagi_gold/features/app_root.dart';
+import 'package:sree_balagi_gold/features/auth/presentation/provider/auth_provider.dart';
+import 'package:sree_balagi_gold/features/auth/presentation/view/pending_verification_screen.dart';
+import 'package:sree_balagi_gold/features/auth/presentation/view/register_or_login_screen.dart';
+import 'package:sree_balagi_gold/features/auth/presentation/view/rejected_approval_screen.dart';
+import 'package:sree_balagi_gold/features/banner/presentation/provider/banner_provider.dart';
+import 'package:sree_balagi_gold/general/service/easy_navigator.dart';
 import 'package:sree_balagi_gold/general/utils/app_color.dart';
-import 'package:sree_balagi_gold/general/utils/app_images.dart';
+import 'package:sree_balagi_gold/general/utils/app_icons.dart';
 import 'package:sree_balagi_gold/general/utils/text_style.dart';
-import 'package:sree_balagi_gold/general/widgets/custom_elevated_btn.dart';
+import 'package:sree_balagi_gold/general/widgets/custom_button.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -32,11 +38,10 @@ class _SplashScreenState extends State<SplashScreen>
     _controller.forward().then(
       (value) {
         circleTransition();
-        // setState(() {
-        //   isFinished = true;
-        // });
       },
     );
+    context.read<AuthProvider>().fetchUser();
+    context.read<BannerProvider>().fetchBanner();
 
     super.initState();
   }
@@ -54,96 +59,82 @@ class _SplashScreenState extends State<SplashScreen>
       );
     }
     setState(() {
-      // isChanged = false;
       isFinished = true;
     });
   }
 
-  // Route createRoute() {
-  //   return PageRouteBuilder(
-  //     pageBuilder: (context, animation, secondaryAnimation) =>
-  //         const SplashScreen2(),
-  //     transitionsBuilder: (context, animation, secondaryAnimation, child) {
-  //       const curve = Curves.fastEaseInToSlowEaseOut;
-  //       final curvedAnimation =
-  //           CurvedAnimation(parent: animation, curve: curve);
-  //       return ScaleTransition(
-  //         scale: curvedAnimation,
-  //         child: child,
-  //       );
-  //     },
-  //   );
-  // }
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final mq = MediaQuery.sizeOf(context);
     return Scaffold(
-      backgroundColor: kwhiteColor,
-      body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          // crossAxisAlignment: CrossAxisAlignment.center,
+      backgroundColor: AppColors.kwhiteColor,
+      body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        Gap(mq.height / 5),
+        Stack(
+          alignment: Alignment.bottomCenter,
           children: [
-            Gap(mq.height / 5),
-            Stack(
-              alignment: Alignment.bottomCenter,
-              children: [
-                Center(
-                  child: Transform.scale(
-                    scale: scaleFactor,
-                    child: const CircleAvatar(
-                      radius: 25,
-                      backgroundColor: primaryColor,
+            Center(
+              child: Transform.scale(
+                scale: scaleFactor,
+                child: const CircleAvatar(
+                  radius: 25,
+                  backgroundColor: AppColors.primaryColor,
+                ),
+              ),
+            ),
+            Center(
+              child: Container(
+                height: 50,
+                width: 50,
+                decoration: BoxDecoration(
+                  image: const DecorationImage(
+                    image: AssetImage(
+                      AppIcons.appIcon,
                     ),
                   ),
+                  color: isChanged
+                      ? AppColors.kwhiteColor
+                      : AppColors.primaryColor,
+                  borderRadius: BorderRadius.circular(30),
                 ),
-                Center(
-                  child: Container(
-                    height: 50,
-                    width: 50,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage(
-                              logo,
-                            ),
-                            fit: BoxFit.fill),
-                        color: isChanged ? kwhiteColor : primaryColor,
-                        borderRadius: BorderRadius.circular(30)),
-                  ),
+              ),
+            ),
+          ],
+        ),
+        const Gap(10),
+        AnimatedBuilder(
+          animation: _controller,
+          builder: (context, child) {
+            return Opacity(
+              opacity: _animation.value,
+              child: Text(
+                'SREE BALAJI GOLD',
+                style: appTextTheme.bodyMedium!.copyWith(
+                  color: isChanged
+                      ? AppColors.primaryColor
+                      : AppColors.kwhiteColor,
                 ),
-              ],
-            ),
-            const Gap(10),
-            AnimatedBuilder(
-              animation: _controller,
-              builder: (context, child) {
-                return Opacity(
-                  opacity: _animation.value,
-                  child: Text(
-                    'SREE BALAJI GOLD',
-                    style: appTextTheme.bodyMedium!.copyWith(
-                        color: isChanged ? primaryColor : kwhiteColor),
-                  ),
-                );
-              },
-            ),
-            Gap(mq.height / 4),
-            isFinished
-                ? ElevatedCutsomBtn(
+              ),
+            );
+          },
+        ),
+        Gap(mq.height / 4),
+        isFinished
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CButton(
                     height: 40,
                     width: 150,
-                    decoration: BoxDecoration(boxShadow: [
-                      BoxShadow(
-                          blurRadius: 5,
-                          spreadRadius: 2,
-                          offset: const Offset(0.2, 3),
-                          color: secondaryColor.withOpacity(0.5))
-                    ]),
-                    color: secondaryColor,
+                    color: AppColors.secondaryColor,
                     onPressed: () {
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (context) => const AboutAndRegiSter(),
-                      ));
+                      init();
                     },
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -152,27 +143,58 @@ class _SplashScreenState extends State<SplashScreen>
                         Text(
                           'Explore With Us',
                           style: appTextTheme.bodySmall!
-                              .copyWith(color: kwhiteColor),
+                              .copyWith(color: AppColors.kwhiteColor),
                         ),
                         const Gap(5),
                         const Icon(
                           Icons.arrow_forward_ios_sharp,
                           size: 15,
-                          color: kwhiteColor,
+                          color: AppColors.kwhiteColor,
                         )
                       ],
                     ),
-                  )
-                : const SizedBox(
-                    height: 40,
-                  )
-          ]),
+                  ),
+                ],
+              )
+            : const SizedBox(
+                height: 40,
+              )
+      ]),
     );
   }
 
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
+  void init() {
+    final userModel = context.read<AuthProvider>().userModel;
+
+    if (userModel == null) {
+      EasyNavigator.pushReplacement(
+        context,
+        child: const RegisterOrLoginScreen(),
+      );
+      return;
+    }
+    context.read<AuthProvider>().setLastAppOpenTime();
+    if (userModel.accountStatusIndex == 0) {
+      EasyNavigator.pushReplacement(
+        context,
+        child: const PendingVerificationScreen(),
+      );
+      return;
+    }
+    if (userModel.accountStatusIndex == 1) {
+      EasyNavigator.pushReplacement(
+        context,
+        child: const AppRoot(),
+      );
+
+      return;
+    }
+    if (userModel.accountStatusIndex == 2) {
+      EasyNavigator.pushReplacement(
+        context,
+        child: const RejectedApprovalScreen(),
+      );
+      return;
+    }
   }
 }

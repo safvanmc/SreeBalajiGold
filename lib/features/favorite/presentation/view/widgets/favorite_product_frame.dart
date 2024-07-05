@@ -79,7 +79,6 @@ class FavoriteProductFrame extends StatelessWidget {
                       title: 'Piece:',
                       value: productModel.pieces.toString(),
                     ),
-            
                   ],
                 ),
               ),
@@ -90,7 +89,7 @@ class FavoriteProductFrame extends StatelessWidget {
           top: 15,
           right: 15,
           child: Consumer<FavoriteProvider>(
-            builder: (context, state, child) => IconButton.filled(
+            builder: (context, state, _) => IconButton.filled(
                 color: AppColors.primaryColor,
                 highlightColor: AppColors.kwhiteColor,
                 style: const ButtonStyle(

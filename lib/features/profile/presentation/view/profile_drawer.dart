@@ -4,8 +4,11 @@ import 'package:easy_url_launcher/easy_url_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:sree_balagi_gold/features/profile/presentation/view/widgets/profile_header_section.dart';
+import 'package:sree_balagi_gold/features/app_root.dart';
+import 'package:sree_balagi_gold/features/profile/presentation/view/edit_profile_screen.dart';
 import 'package:sree_balagi_gold/features/profile/presentation/view/widgets/profile_frame.dart';
+import 'package:sree_balagi_gold/features/profile/presentation/view/widgets/profile_header_section.dart';
+import 'package:sree_balagi_gold/general/service/easy_navigator.dart';
 import 'package:sree_balagi_gold/general/utils/app_color.dart';
 import 'package:sree_balagi_gold/general/utils/app_details.dart';
 import 'package:sree_balagi_gold/general/utils/app_icons.dart';
@@ -47,7 +50,9 @@ class ProfileDrawer extends StatelessWidget {
                   Icons.mode_edit_outlined,
                   color: AppColors.secondaryColor,
                 ),
-                onTap: () {},
+                onTap: () {
+                  EasyNavigator.push(context, child: const EditProfileScreen());
+                },
               ),
               ProfileFrame(
                 title: 'Call SBG',
@@ -61,7 +66,12 @@ class ProfileDrawer extends StatelessWidget {
               ProfileFrame(
                 title: 'My Orders',
                 icon: AppIcons.help,
-                onTap: () {},
+                onTap: () {
+                  EasyNavigator.pushReplacement(context,
+                      child: const AppRoot(
+                        currentIndex: 3,
+                      ));
+                },
               ),
               ProfileFrame(
                 title: 'About Us',
@@ -124,9 +134,7 @@ class ProfileDrawer extends StatelessWidget {
               ProfileFrame(
                 title: 'Log Out',
                 icon: AppIcons.exit,
-                onTap: () {
-                  
-                },
+                onTap: () {},
               ),
               const Gap(20),
             ],

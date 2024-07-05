@@ -1,14 +1,19 @@
+import 'package:easy_url_launcher/easy_url_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:sree_balagi_gold/features/cart/presentation/view/cart_screen.dart';
 import 'package:sree_balagi_gold/features/favorite/presentation/view/favorite_product_display_screen.dart';
 import 'package:sree_balagi_gold/features/home/presentation/view/home_screen.dart';
 import 'package:sree_balagi_gold/features/main_category/presentation/view/main_category_screen.dart';
+import 'package:sree_balagi_gold/features/my_orders/presentation/view/my_orders_screen.dart';
 import 'package:sree_balagi_gold/features/notification/presentation/view/notification_screen.dart';
 import 'package:sree_balagi_gold/features/profile/presentation/view/profile_drawer.dart';
 import 'package:sree_balagi_gold/general/service/detect_user_screenshot_action.dart';
 import 'package:sree_balagi_gold/general/service/easy_navigator.dart';
 import 'package:sree_balagi_gold/general/utils/app_color.dart';
+import 'package:sree_balagi_gold/general/utils/app_details.dart';
 import 'package:sree_balagi_gold/general/utils/app_icons.dart';
+import 'package:sree_balagi_gold/general/utils/text_style.dart';
 
 class AppRoot extends StatefulWidget {
   const AppRoot({
@@ -25,12 +30,8 @@ class _AppRootState extends State<AppRoot> {
   List<Widget> screens = [
     const HomeScreen(),
     const MainCategoryScreen(),
-    Container(
-      color: Colors.green,
-    ),
-    Container(
-      color: Colors.yellow,
-    ),
+    const CartScreen(),
+    const MyOrdersScreen(),
     const NotificationScreen(),
   ];
   @override
@@ -166,6 +167,101 @@ class _AppRootState extends State<AppRoot> {
             label: 'Notification',
           ),
         ],
+      ),
+      floatingActionButton:
+          currentIndex == 0 ? const CustomFloatingBtn() : null,
+    );
+  }
+}
+
+class CustomFloatingBtn extends StatelessWidget {
+  const CustomFloatingBtn({
+    super.key,
+  });
+
+  get kwhiteColor => null;
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton(
+      highlightElevation: 0,
+      elevation: 0,
+      backgroundColor: Colors.transparent,
+      shape: const CircleBorder(),
+      onPressed: () {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            backgroundColor: kwhiteColor,
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 15, vertical: 25),
+            titlePadding: const EdgeInsets.only(top: 15),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            alignment: Alignment.center,
+            title: Stack(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      AppIcons.whatsapp,
+                      height: 20,
+                      width: 20,
+                    ),
+                    Text(
+                      'Whatsapp Now',
+                      textAlign: TextAlign.center,
+                      style: appTextTheme.bodyMedium!
+                          .copyWith(color: Colors.black),
+                    )
+                  ],
+                ),
+                Positioned(
+                    right: 5,
+                    bottom: -10,
+                    child: IconButton(
+                        style: const ButtonStyle(
+                            splashFactory: NoSplash.splashFactory,
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        splashColor: Colors.transparent,
+                        icon: const Icon(
+                          Icons.close_rounded,
+                          size: 20,
+                          color: Colors.black,
+                        )))
+              ],
+            ),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                ListTile(
+                  title: Padding(
+                    padding: const EdgeInsets.only(bottom: 5),
+                    child: Text('+91 ${AppDetails.phoneNumber}'),
+                  ),
+                  titleTextStyle: appTextTheme.displayMedium!.copyWith(
+                      fontSize: 12,
+                      decoration: TextDecoration.none,
+                      color: Colors.black),
+                  minTileHeight: 60,
+                  onTap: () {
+                    EasyLauncher.sendToWhatsApp(phone: AppDetails.phoneNumber);
+                  },
+                )
+              ],
+            ),
+          ),
+        );
+      },
+      child: Image.asset(
+        AppIcons.whatsapp,
+        fit: BoxFit.cover,
       ),
     );
   }

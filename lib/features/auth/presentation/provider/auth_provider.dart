@@ -94,6 +94,7 @@ class AuthProvider extends ChangeNotifier {
     final result = _iAuthFacade.fetchUser();
     result.listen((event) {
       userModel = event;
+      notifyListeners();
     });
   }
 

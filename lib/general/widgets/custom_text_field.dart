@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import '../utils/text_style.dart';
 
 class CTextField extends StatelessWidget {
@@ -19,6 +20,7 @@ class CTextField extends StatelessWidget {
     this.maxLength,
     this.maxLines,
     this.textInputAction = TextInputAction.next,
+    this.readOnly = false,
   });
   final Widget? label;
   final String? hintText;
@@ -33,10 +35,12 @@ class CTextField extends StatelessWidget {
   final AutovalidateMode? autovalidateMode;
   final int? maxLength;
   final int? maxLines;
+  final bool readOnly;
   final TextInputAction textInputAction;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      readOnly: readOnly,
       controller: controller,
       keyboardType: keyboardType,
       inputFormatters: inputFormatters,

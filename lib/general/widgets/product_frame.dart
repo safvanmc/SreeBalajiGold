@@ -3,10 +3,8 @@ import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 import 'package:sree_balagi_gold/features/category_product_display/data/model/product_model.dart';
 import 'package:sree_balagi_gold/features/favorite/presentation/provider/favorite_provider.dart';
-
 import 'package:sree_balagi_gold/general/utils/app_color.dart';
-import 'package:sree_balagi_gold/general/utils/text_style.dart';
-import 'package:sree_balagi_gold/general/widgets/custom_button.dart';
+import 'package:sree_balagi_gold/general/widgets/add_cart_button.dart';
 import 'package:sree_balagi_gold/general/widgets/custom_network_image.dart';
 
 class ProductFrame extends StatelessWidget {
@@ -125,30 +123,10 @@ class ProductFrame extends StatelessWidget {
                           ),
                         ),
                         const Gap(2),
-                        CButton(
+                        AddToCartButton(
+                          productModel: productModel,
                           height: 35,
                           width: 80,
-                          color: AppColors.primaryColor,
-                          child: Row(
-                            children: [
-                              const Icon(
-                                Icons.shopping_cart_outlined,
-                                color: AppColors.kwhiteColor,
-                                size: 15,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 3),
-                                child: Text(
-                                  'Add',
-                                  style: appTextTheme.labelLarge!.copyWith(
-                                    fontSize: 12,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                          onPressed: () {},
                         )
                       ],
                     ),

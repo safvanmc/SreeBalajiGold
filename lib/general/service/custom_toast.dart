@@ -10,7 +10,6 @@ class CToast {
     ElegantNotification.success(
       position: Alignment.topRight,
       width: mq.width * 0.9,
-      
 
       // isDismissible: false,
       stackedOptions: StackedOptions(
@@ -35,9 +34,8 @@ class CToast {
     final mq = MediaQuery.sizeOf(context);
 
     ElegantNotification.error(
-         
       width: mq.width * 0.9,
-      
+
       position: Alignment.topRight,
 
       // isDismissible: false,
@@ -48,7 +46,6 @@ class CToast {
       ),
       title: Text(title ?? 'error'),
       shadow: BoxShadow(
-        
         color: Colors.black.withOpacity(0.2),
         spreadRadius: 3,
         blurRadius: 7,
@@ -84,4 +81,6 @@ class CToast {
       description: Text(description),
     ).show(context);
   }
+
+  static void error(BuildContext context, {required String description}) {}
 }

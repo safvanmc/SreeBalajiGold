@@ -7,6 +7,8 @@ import 'package:sree_balagi_gold/features/auth/data/i_auth_facade.dart';
 import 'package:sree_balagi_gold/features/auth/presentation/provider/auth_provider.dart';
 import 'package:sree_balagi_gold/features/banner/data/i_banner_facade.dart';
 import 'package:sree_balagi_gold/features/banner/presentation/provider/banner_provider.dart';
+import 'package:sree_balagi_gold/features/cart/data/i_cart_facade.dart';
+import 'package:sree_balagi_gold/features/cart/presentation/provider/cart_provider.dart';
 import 'package:sree_balagi_gold/features/category_product_display/data/i_category_product_facade.dart';
 import 'package:sree_balagi_gold/features/category_product_display/presentation/provider/category_product_provider.dart';
 import 'package:sree_balagi_gold/features/favorite/data/i_favorite_facade.dart';
@@ -16,6 +18,8 @@ import 'package:sree_balagi_gold/features/main_category/presentation/provider/ma
 import 'package:sree_balagi_gold/features/notification/data/i_notification_facade.dart';
 import 'package:sree_balagi_gold/features/notification/presentation/provider/notification_provider.dart';
 import 'package:sree_balagi_gold/features/product_details/presentation/provider/product_detail_provider.dart';
+import 'package:sree_balagi_gold/features/profile/data/i_profile_facade.dart';
+import 'package:sree_balagi_gold/features/profile/presentation/provider/edit_profile_provider.dart';
 import 'package:sree_balagi_gold/features/splash_screen.dart/presentation/view/splash_screen.dart';
 import 'package:sree_balagi_gold/features/sub_category/data/i_sub_category_facade.dart';
 import 'package:sree_balagi_gold/features/sub_category/presentation/provider/sub_category_provider.dart';
@@ -81,6 +85,16 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => FavoriteProvider(
             sl<IFavoriteFacade>(),
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => EditProfileProvider(
+            sl<IProfileFacade>(),
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => CartProvider(
+            sl<ICartFacade>(),
           ),
         ),
       ],

@@ -50,7 +50,7 @@ class _OtpScreenState extends State<OtpScreen> {
                   ),
                   const Gap(10),
                   Text(
-                    'Enter the OTp sent to +91 ${state.phoneNumberController.text}',
+                    'Enter the OTP sent to +91 ${state.phoneNumberController.text}',
                     style:
                         appTextTheme.bodySmall!.copyWith(color: Colors.black),
                   ),

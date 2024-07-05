@@ -36,6 +36,7 @@ class FavoriteProvider extends ChangeNotifier {
         );
       },
       (r) {
+        //
         notifyListeners();
       },
     );
@@ -76,7 +77,7 @@ class FavoriteProvider extends ChangeNotifier {
     BuildContext context, {
     required ProductModel productModel,
   }) {
-    return context.read<AuthProvider>().userModel!.favorites.contains(
+    return context.read<AuthProvider>().userModel!.favorites!.contains(
           productModel.id,
         );
   }

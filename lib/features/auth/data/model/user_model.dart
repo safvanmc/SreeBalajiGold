@@ -1,5 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserModel {
@@ -21,7 +23,8 @@ class UserModel {
   final int? remarksCount;
   final Timestamp? lastEntryTime;
   final String? blockReason;
-  final List<String> favorites;
+  final List<String>? favorites;
+  final List<Map<String, dynamic>>? cart;
   UserModel({
     this.id,
     required this.phoneNumber,
@@ -34,14 +37,15 @@ class UserModel {
     this.createdAt,
     this.updatedAt,
     this.fcmToken,
-    required this.isBlocked,
+    this.isBlocked,
     this.accountStatusIndex = 0,
     this.rejectReason,
     this.availableProductCount,
     this.remarksCount,
     this.lastEntryTime,
     this.blockReason,
-    required this.favorites,
+    this.favorites,
+    this.cart,
   });
 
   Map<String, dynamic> toMapCreateUser() {
@@ -64,11 +68,38 @@ class UserModel {
       'remarksCount': remarksCount ?? 0,
       'lastEntryTime': lastEntryTime ?? FieldValue.serverTimestamp(),
       'blockReason': blockReason,
-      'favorites':[],
+      'favorites': [],
+      'cart': [],
+    };
+  }
+
+  Map<String, dynamic> updateMap() {
+    return <String, dynamic>{
+      'id': id,
+      'name': name,
+      'phoneNumber': phoneNumber,
+      'shopName': shopName,
+      'shopAddress': shopAddress,
+      'photoUrl': photoUrl,
+      'nameKeyword': nameKeyword,
+      'shopNameKeyword': shopNameKeyword,
+      'updatedAt': updatedAt,
     };
   }
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
+    List<Map<String, dynamic>> cart = [];
+    final cartMap = map['cart'] as Map;
+    log(cartMap.runtimeType.toString());
+    cartMap.forEach(
+      (key, value) {
+        cart.add({
+          key: value,
+        });
+      },
+    );
+    // print(cart);
+
     return UserModel(
       id: map['id'] != null ? map['id'] as String : null,
       phoneNumber: map['phoneNumber'] as String,
@@ -102,6 +133,7 @@ class UserModel {
       favorites: map['favorites'] != null
           ? List<String>.from(map['favorites'] as List<dynamic>)
           : [],
+      cart: cart,
     );
   }
 
@@ -125,6 +157,7 @@ class UserModel {
     Timestamp? lastEntryTime,
     String? blockReason,
     List<String>? favorites,
+    List<Map<String, dynamic>>? cart,
   }) {
     return UserModel(
       id: id ?? this.id,
@@ -141,11 +174,13 @@ class UserModel {
       isBlocked: isBlocked ?? this.isBlocked,
       accountStatusIndex: accountStatusIndex ?? this.accountStatusIndex,
       rejectReason: rejectReason ?? this.rejectReason,
-      availableProductCount: availableProductCount ?? this.availableProductCount,
+      availableProductCount:
+          availableProductCount ?? this.availableProductCount,
       remarksCount: remarksCount ?? this.remarksCount,
       lastEntryTime: lastEntryTime ?? this.lastEntryTime,
       blockReason: blockReason ?? this.blockReason,
       favorites: favorites ?? this.favorites,
+      cart: cart ?? this.cart,
     );
   }
 }

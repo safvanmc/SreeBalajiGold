@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:sree_balagi_gold/features/auth/presentation/provider/auth_provider.dart';
 import 'package:sree_balagi_gold/features/category_product_display/data/model/product_model.dart';
 import 'package:sree_balagi_gold/features/favorite/data/i_favorite_facade.dart';
-import 'package:sree_balagi_gold/general/service/custom_toast.dart';
+import 'package:sree_balagi_gold/general/widgets/custom_toast.dart';
 
 class FavoriteProvider extends ChangeNotifier {
   FavoriteProvider(this.iFavoriteFacade);
@@ -17,9 +17,8 @@ class FavoriteProvider extends ChangeNotifier {
   }) async {
     final user = context.read<AuthProvider>().userModel;
     if (user == null) {
-      CToast.errorMessage(
-        context,
-        description: 'User null',
+      CToast.error(
+        msg: 'User null',
       );
       return;
     }
@@ -30,9 +29,8 @@ class FavoriteProvider extends ChangeNotifier {
     );
     result.fold(
       (l) {
-        CToast.errorMessage(
-          context,
-          description: l.msg,
+        CToast.error(
+          msg: l.msg,
         );
       },
       (r) {
@@ -48,9 +46,8 @@ class FavoriteProvider extends ChangeNotifier {
   }) async {
     final user = context.read<AuthProvider>().userModel;
     if (user == null) {
-      CToast.errorMessage(
-        context,
-        description: 'User null',
+      CToast.error(
+        msg: 'User null',
       );
       return;
     }
@@ -62,9 +59,8 @@ class FavoriteProvider extends ChangeNotifier {
 
     result.fold(
       (l) {
-        CToast.errorMessage(
-          context,
-          description: l.msg,
+        CToast.error(
+          msg: l.msg,
         );
       },
       (r) {
@@ -126,9 +122,8 @@ class FavoriteProvider extends ChangeNotifier {
     final result = await iFavoriteFacade.fetchFavoriteProducts(productIds);
     result.fold((failure) {
       log(failure.msg);
-      CToast.errorMessage(
-        context,
-        description: failure.msg,
+      CToast.error(
+        msg: failure.msg,
       );
       isLoading = false;
       notifyListeners();

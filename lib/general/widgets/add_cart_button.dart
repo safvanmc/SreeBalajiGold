@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sree_balagi_gold/features/auth/presentation/provider/auth_provider.dart';
@@ -14,63 +13,62 @@ class AddToCartButton extends StatelessWidget {
     this.width = double.infinity,
     required this.height,
     required this.productModel,
+    required this.remove,
+    required this.add,
+    this.addIcon,
+    this.removeIcon,
+    required this.onPressed,
   });
+  final IconData? addIcon;
+  final IconData? removeIcon;
+
+  final String remove;
+  final String add;
   final double? width;
   final double? height;
   final ProductModel productModel;
+  final void Function() onPressed;
   @override
   Widget build(BuildContext context) {
     return Consumer<CartProvider>(
       builder: (context, state, _) {
         return CButton(
-          height: height,
-          width: width,
-          color: AppColors.primaryColor,
-          child: Row(
-            children: [
-              Icon(
-                context
-                        .watch<AuthProvider>()
-                        .userModel!
-                        .cart!
-                        .any((map) => map.containsKey(productModel.id))
-                    ? CupertinoIcons.delete
-                    : Icons.shopping_cart_outlined,
-                color: AppColors.kwhiteColor,
-                size: 15,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 3),
-                child: Text(
+            height: height,
+            width: width,
+            color: AppColors.kBottonColor,
+            onPressed: onPressed,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
                   context
                           .watch<AuthProvider>()
                           .userModel!
                           .cart!
                           .any((map) => map.containsKey(productModel.id))
-                      ? 'Remove'
-                      : 'Add',
-                  style: appTextTheme.labelLarge!.copyWith(
-                    fontSize: 12,
-                    color: Colors.white,
-                  ),
+                      ? removeIcon
+                      : addIcon,
+                  color: AppColors.kwhiteColor,
+                  size: 15,
                 ),
-              )
-            ],
-          ),
-          onPressed: () {
-            if (context
-                .read<AuthProvider>()
-                .userModel!
-                .cart!
-                .any((map) => map.containsKey(productModel.id))) {
-              // context
-              //     .read<CartProvider>()
-              //     .removeFromCart(context, productModel);
-            } else {
-              context.read<CartProvider>().addtoCart(context, productModel);
-            }
-          },
-        );
+                Padding(
+                  padding: const EdgeInsets.only(top: 3),
+                  child: Text(
+                    context
+                            .watch<AuthProvider>()
+                            .userModel!
+                            .cart!
+                            .any((map) => map.containsKey(productModel.id))
+                        ? remove
+                        : add,
+                    style: appTextTheme.labelLarge!.copyWith(
+                      fontSize: 12,
+                      color: Colors.white,
+                    ),
+                  ),
+                )
+              ],
+            ));
       },
     );
   }

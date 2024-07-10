@@ -94,6 +94,24 @@ class ProductModel {
     };
   }
 
+  Map<String, dynamic> ordertoMap() {
+    return <String, dynamic>{
+      'productUrl': productUrl,
+      'materials': materials
+          .map(
+            (e) => e.toMap(),
+          )
+          .toList(),
+      'serialNumber': serialNumber,
+      'mainCategoryId': mainCategoryId,
+      'subCategoryId': subCategoryId,
+      'grossWeight': grossWeight,
+      'netWeight': netWeight,
+      'pieces': pieces,
+      'id': id,
+    };
+  }
+
   factory ProductModel.fromMap(Map<String, dynamic> map) {
     return ProductModel(
       productUrl: List<String>.from(map['productUrl']),
@@ -109,8 +127,10 @@ class ProductModel {
       id: map['id'] as String,
       mainCategoryId: map['mainCategoryId'] as String,
       subCategoryId: map['subCategoryId'] as String,
-      createdAt: map['createdAt'] as Timestamp,
-      updatedAt: map['updatedAt'] as Timestamp,
+      createdAt:
+          map['createdAt'] != null ? map['createdAt'] as Timestamp : null,
+      updatedAt:
+          map['updatedAt'] != null ? map['updatedAt'] as Timestamp : null,
       keywords: map['keywords'] != null && map['keywords'] is List
           ? List<String>.from(map['keywords'] as List)
           : null,

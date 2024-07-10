@@ -9,7 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:sree_balagi_gold/general/core/failure/main_failure.dart';
 import 'package:sree_balagi_gold/general/core/typedef.dart';
-import 'package:sree_balagi_gold/general/service/custom_toast.dart';
+import 'package:sree_balagi_gold/general/widgets/custom_toast.dart';
 
 class ImageUploadServices {
   static FutureResult<List<String>> uploadListImageStorage({
@@ -92,7 +92,7 @@ class ImageUploadServices {
       await Future.wait(functionList);
       log('images deleted successfully');
     } on Exception catch (e) {
-      CToast.error(context, description: e.toString());
+      CToast.error(msg: e.toString());
     }
   }
 
@@ -111,13 +111,13 @@ class ImageUploadServices {
     } on FirebaseException catch (e) {
       if (e.code == 'object-not-found') {
         // The image doesn't exist, handle accordingly
-        CToast.error(context, description: 'Image does not exist at $imageUrl');
+        CToast.error(msg: 'Image does not exist at $imageUrl');
       } else {
         // Handle other Firebase exceptions
-        CToast.error(context, description: 'F Exception: ${e.message}');
+        CToast.error(msg: 'F Exception: ${e.message}');
       }
     } catch (e) {
-      CToast.error(context, description: '$e');
+      CToast.error(msg: '$e');
       // Handle other exceptions
     }
   }

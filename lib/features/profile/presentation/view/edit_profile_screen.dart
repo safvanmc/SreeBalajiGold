@@ -8,11 +8,11 @@ import 'package:provider/provider.dart';
 import 'package:sree_balagi_gold/features/auth/presentation/provider/auth_provider.dart';
 import 'package:sree_balagi_gold/features/profile/presentation/provider/edit_profile_provider.dart';
 import 'package:sree_balagi_gold/features/profile/presentation/view/widgets/image_bottom_frame.dart';
-import 'package:sree_balagi_gold/general/service/show_progress.dart';
 import 'package:sree_balagi_gold/general/utils/app_color.dart';
 import 'package:sree_balagi_gold/general/utils/app_icons.dart';
 import 'package:sree_balagi_gold/general/widgets/custom_button.dart';
 import 'package:sree_balagi_gold/general/widgets/custom_text_field.dart';
+import 'package:sree_balagi_gold/general/widgets/show_progress.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key});

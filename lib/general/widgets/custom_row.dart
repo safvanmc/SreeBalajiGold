@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 class CRowWidget extends StatelessWidget {
   const CRowWidget({
     super.key,
-    required this.widget,
+    required this.data,
     required this.keyvalue,
   });
 
-  final String widget;
+  final String data;
   final String keyvalue;
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class CRowWidget extends StatelessWidget {
           ),
         ),
         Text(
-          widget,
+          data,
           style: const TextStyle(
             color: Color(0xFF333333),
             fontSize: 12,

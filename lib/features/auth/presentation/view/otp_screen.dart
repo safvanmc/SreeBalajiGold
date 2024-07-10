@@ -4,13 +4,13 @@ import 'package:pinput/pinput.dart';
 import 'package:provider/provider.dart';
 import 'package:sree_balagi_gold/features/auth/presentation/provider/auth_provider.dart';
 import 'package:sree_balagi_gold/features/splash_screen.dart/presentation/view/splash_screen.dart';
-import 'package:sree_balagi_gold/general/service/custom_toast.dart';
 import 'package:sree_balagi_gold/general/service/easy_navigator.dart';
-import 'package:sree_balagi_gold/general/service/show_progress.dart';
 import 'package:sree_balagi_gold/general/utils/app_color.dart';
 import 'package:sree_balagi_gold/general/utils/app_icons.dart';
 import 'package:sree_balagi_gold/general/utils/text_style.dart';
 import 'package:sree_balagi_gold/general/widgets/custom_button.dart';
+import 'package:sree_balagi_gold/general/widgets/custom_toast.dart';
+import 'package:sree_balagi_gold/general/widgets/show_progress.dart';
 import 'package:timer_count_down/timer_count_down.dart';
 
 class OtpScreen extends StatefulWidget {
@@ -106,18 +106,15 @@ class _OtpScreenState extends State<OtpScreen> {
                               isRegister: widget.isRegister,
                               failure: (error) {
                                 Navigator.pop(context);
-                                CToast.errorMessage(
-                                  context,
-                                  description: error,
+                                CToast.error(
+                                  msg: error,
                                 );
                               },
                               sendOTP: () {
                                 Navigator.pop(context);
                                 state.visibleReSendButton(false);
-                                CToast.successMessage(
-                                  context,
-                                  description:
-                                      'OTP has been resent successfully!',
+                                CToast.success(
+                                  msg: 'OTP has been resent successfully!',
                                 );
                               },
                             );
@@ -186,16 +183,14 @@ class _OtpScreenState extends State<OtpScreen> {
       otp: controller.text,
       failure: (value) {
         Navigator.pop(context);
-        CToast.errorMessage(
-          context,
-          description: value,
+        CToast.error(
+          msg: value,
         );
       },
       success: () {
         Navigator.pop(context);
-        CToast.successMessage(
-          context,
-          description: 'Verification successfully completed',
+        CToast.success(
+          msg: 'Verification successfully completed',
         );
         EasyNavigator.pushAndRemoveUntil(
           context,

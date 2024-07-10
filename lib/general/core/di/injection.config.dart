@@ -35,6 +35,10 @@ import 'package:sree_balagi_gold/features/main_category/data/i_main_category_fac
     as _i14;
 import 'package:sree_balagi_gold/features/main_category/repo/i_main_category_impl.dart'
     as _i15;
+import 'package:sree_balagi_gold/features/my_orders/data/i_order_facade.dart'
+    as _i28;
+import 'package:sree_balagi_gold/features/my_orders/repo/i_order_impl.dart'
+    as _i29;
 import 'package:sree_balagi_gold/features/notification/data/i_notification_facade.dart'
     as _i20;
 import 'package:sree_balagi_gold/features/notification/repo/i_notification_impl.dart'
@@ -49,7 +53,7 @@ import 'package:sree_balagi_gold/features/sub_category/repo/i_sub_category_impl.
     as _i23;
 import 'package:sree_balagi_gold/general/core/di/app_injectable_module.dart'
     as _i4;
-import 'package:sree_balagi_gold/general/core/di/app_injection.dart' as _i28;
+import 'package:sree_balagi_gold/general/core/di/app_injection.dart' as _i30;
 import 'package:sree_balagi_gold/general/core/di/firebase_injectable_module.dart'
     as _i3;
 
@@ -84,8 +88,10 @@ Future<_i1.GetIt> init(
         gh<_i8.FirebaseFirestore>(),
         gh<_i6.FirebaseAuth>(),
       ));
-  gh.lazySingleton<_i12.ICartFacade>(
-      () => _i13.ICartImpl(gh<_i8.FirebaseFirestore>()));
+  gh.lazySingleton<_i12.ICartFacade>(() => _i13.ICartImpl(
+        gh<_i8.FirebaseFirestore>(),
+        gh<_i6.FirebaseAuth>(),
+      ));
   gh.lazySingleton<_i14.IMainCategoryFacade>(
       () => _i15.IMainCategoryImpl(gh<_i8.FirebaseFirestore>()));
   gh.lazySingleton<_i16.ICategoryProductFacade>(
@@ -105,9 +111,11 @@ Future<_i1.GetIt> init(
         gh<_i8.FirebaseFirestore>(),
         gh<_i9.FirebaseMessaging>(),
       ));
+  gh.lazySingleton<_i28.IOrderFacade>(
+      () => _i29.IOrderImpl(gh<_i8.FirebaseFirestore>()));
   return getIt;
 }
 
 class _$FirebaseInjectableModule extends _i3.FirebaseInjectableModule {}
 
-class _$AppInjection extends _i28.AppInjection {}
+class _$AppInjection extends _i30.AppInjection {}

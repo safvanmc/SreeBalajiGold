@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:sree_balagi_gold/features/auth/presentation/provider/auth_provider.dart';
 import 'package:sree_balagi_gold/features/category_product_display/data/i_category_product_facade.dart';
 import 'package:sree_balagi_gold/features/category_product_display/data/model/product_model.dart';
-import 'package:sree_balagi_gold/general/service/custom_toast.dart';
+import 'package:sree_balagi_gold/general/widgets/custom_toast.dart';
 
 class CategoryProductProvider extends ChangeNotifier {
   CategoryProductProvider(
@@ -57,9 +57,8 @@ class CategoryProductProvider extends ChangeNotifier {
     }
     final user = context.read<AuthProvider>().userModel;
     if (user == null) {
-      CToast.errorMessage(
-        context,
-        description: 'User null',
+      CToast.error(
+        msg: 'User null',
       );
       return;
     }
@@ -79,9 +78,8 @@ class CategoryProductProvider extends ChangeNotifier {
           serverFailure: (err) {
             isLoading = false;
 
-            CToast.errorMessage(
-              context,
-              description: err.msg,
+            CToast.error(
+              msg: err.msg,
             );
           },
         );
@@ -89,7 +87,6 @@ class CategoryProductProvider extends ChangeNotifier {
       (list) {
         isLoading = false;
         productList = [...productList, ...list];
-        // // CHECK IF REEL VIDEO LIST IS EMPTY OR LESS THAN 10
         if (productList.length < 10 || productList.isEmpty) {
           isMoreDataLoading = false;
         }

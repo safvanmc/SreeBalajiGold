@@ -3,14 +3,14 @@ import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 import 'package:sree_balagi_gold/features/auth/presentation/provider/auth_provider.dart';
 import 'package:sree_balagi_gold/features/auth/presentation/view/otp_screen.dart';
-import 'package:sree_balagi_gold/general/service/custom_toast.dart';
 import 'package:sree_balagi_gold/general/service/easy_navigator.dart';
-import 'package:sree_balagi_gold/general/service/show_progress.dart';
 import 'package:sree_balagi_gold/general/utils/app_color.dart';
 import 'package:sree_balagi_gold/general/utils/app_icons.dart';
 import 'package:sree_balagi_gold/general/utils/text_style.dart';
 import 'package:sree_balagi_gold/general/widgets/custom_button.dart';
 import 'package:sree_balagi_gold/general/widgets/custom_text_field.dart';
+import 'package:sree_balagi_gold/general/widgets/custom_toast.dart';
+import 'package:sree_balagi_gold/general/widgets/show_progress.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key, required this.isRegister});
@@ -105,9 +105,8 @@ class _AuthScreenState extends State<AuthScreen> {
                         isRegister: widget.isRegister,
                         failure: (e) {
                           EasyNavigator.pop(context);
-                          CToast.errorMessage(
-                            context,
-                            description: e,
+                          CToast.error(
+                            msg: e,
                           );
                         },
                         sendOTP: () {

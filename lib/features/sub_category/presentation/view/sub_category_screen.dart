@@ -24,17 +24,24 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
   ScrollController scrollController = ScrollController();
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback(
-      (_) {
-        context.read<SubCategoryProvider>()
-          ..clearData()
-          ..initData(
-            context: context,
-            scrollController: scrollController,
-            mainCategoryID: widget.mainCategoryModel.id!,
-          );
-      },
-    );
+    context.read<SubCategoryProvider>()
+      ..clearData()
+      ..initData(
+        context: context,
+        scrollController: scrollController,
+        mainCategoryID: widget.mainCategoryModel.id!,
+      );
+    // WidgetsBinding.instance.addPostFrameCallback(
+    //   (_) {
+    //     context.read<SubCategoryProvider>()
+    //       ..clearData()
+    //       ..initData(
+    //         context: context,
+    //         scrollController: scrollController,
+    //         mainCategoryID: widget.mainCategoryModel.id!,
+    //       );
+    //   },
+    // );
     super.initState();
   }
 

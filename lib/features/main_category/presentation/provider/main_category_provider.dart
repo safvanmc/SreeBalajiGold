@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:sree_balagi_gold/features/auth/presentation/provider/auth_provider.dart';
 import 'package:sree_balagi_gold/features/main_category/data/i_main_category_facade.dart';
 import 'package:sree_balagi_gold/features/main_category/data/model/main_category_model.dart';
-import 'package:sree_balagi_gold/general/service/custom_toast.dart';
+import 'package:sree_balagi_gold/general/widgets/custom_toast.dart';
 
 class MainCategoryProvider extends ChangeNotifier {
   MainCategoryProvider(
@@ -20,10 +20,10 @@ class MainCategoryProvider extends ChangeNotifier {
   Future<void> initData({
     required BuildContext context,
     required ScrollController scrollController,
-  }) async{
+  }) async {
     if (mainCategoryList.isEmpty) {
       clearData();
-     await _fetchData(context);
+      await _fetchData(context);
     }
 
     scrollController.addListener(
@@ -49,9 +49,8 @@ class MainCategoryProvider extends ChangeNotifier {
     }
     final user = context.read<AuthProvider>().userModel;
     if (user == null) {
-      CToast.errorMessage(
-        context,
-        description: 'User null',
+      CToast.error(
+        msg: 'User null',
       );
       return;
     }
@@ -68,9 +67,8 @@ class MainCategoryProvider extends ChangeNotifier {
           serverFailure: (err) {
             isLoading = false;
 
-            CToast.errorMessage(
-              context,
-              description: err.msg,
+            CToast.error(
+              msg: err.msg,
             );
           },
         );

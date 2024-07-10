@@ -15,6 +15,8 @@ import 'package:sree_balagi_gold/features/favorite/data/i_favorite_facade.dart';
 import 'package:sree_balagi_gold/features/favorite/presentation/provider/favorite_provider.dart';
 import 'package:sree_balagi_gold/features/main_category/data/i_main_category_facade.dart';
 import 'package:sree_balagi_gold/features/main_category/presentation/provider/main_category_provider.dart';
+import 'package:sree_balagi_gold/features/my_orders/data/i_order_facade.dart';
+import 'package:sree_balagi_gold/features/my_orders/presentation/provider/order_provider.dart';
 import 'package:sree_balagi_gold/features/notification/data/i_notification_facade.dart';
 import 'package:sree_balagi_gold/features/notification/presentation/provider/notification_provider.dart';
 import 'package:sree_balagi_gold/features/product_details/presentation/provider/product_detail_provider.dart';
@@ -27,6 +29,7 @@ import 'package:sree_balagi_gold/general/core/di/injection.dart';
 import 'package:sree_balagi_gold/general/utils/app_details.dart';
 import 'package:sree_balagi_gold/general/utils/app_fonts.dart';
 import 'package:sree_balagi_gold/general/utils/text_style.dart';
+import 'package:toastification/toastification.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -97,18 +100,25 @@ class MyApp extends StatelessWidget {
             sl<ICartFacade>(),
           ),
         ),
-      ],
-      child: MaterialApp(
-        title: AppDetails.appName,
-        debugShowCheckedModeBanner: false,
-        navigatorKey: navigatorKey,
-        theme: ThemeData(
-          textTheme: appTextTheme,
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-          fontFamily: AppFonts.primaryFont,
+        ChangeNotifierProvider(
+          create: (context) => OrderProvider(
+            sl<IOrderFacade>(),
+          ),
         ),
-        home: const SplashScreen(),
+      ],
+      child: ToastificationWrapper(
+        child: MaterialApp(
+          title: AppDetails.appName,
+          debugShowCheckedModeBanner: false,
+          navigatorKey: navigatorKey,
+          theme: ThemeData(
+            textTheme: appTextTheme,
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            useMaterial3: true,
+            fontFamily: AppFonts.primaryFont,
+          ),
+          home: const SplashScreen(),
+        ),
       ),
     );
   }

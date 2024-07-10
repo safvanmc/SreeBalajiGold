@@ -44,6 +44,7 @@ class _AppRootState extends State<AppRoot> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         iconTheme: const IconThemeData(
           color: Colors.white,
@@ -79,8 +80,15 @@ class _AppRootState extends State<AppRoot> {
           const Gap(5),
         ],
       ),
-      drawer: const Drawer(
-        child: ProfileDrawer(),
+      drawer: Drawer(
+        child: ProfileDrawer(
+          switchMyOrders: () {
+            EasyNavigator.pop(context);
+            setState(() {
+              currentIndex = 3;
+            });
+          },
+        ),
       ),
       body: screens[currentIndex],
       bottomNavigationBar: BottomNavigationBar(
@@ -243,7 +251,10 @@ class CustomFloatingBtn extends StatelessWidget {
                 ListTile(
                   title: Padding(
                     padding: const EdgeInsets.only(bottom: 5),
-                    child: Text('+91 ${AppDetails.phoneNumber}'),
+                    child: Text(
+                      AppDetails.whatsappNumber,
+                      style: const TextStyle(color: Colors.black),
+                    ),
                   ),
                   titleTextStyle: appTextTheme.displayMedium!.copyWith(
                       fontSize: 12,
@@ -251,7 +262,8 @@ class CustomFloatingBtn extends StatelessWidget {
                       color: Colors.black),
                   minTileHeight: 60,
                   onTap: () {
-                    EasyLauncher.sendToWhatsApp(phone: AppDetails.phoneNumber);
+                    EasyLauncher.sendToWhatsApp(
+                        phone: AppDetails.whatsappNumber);
                   },
                 )
               ],

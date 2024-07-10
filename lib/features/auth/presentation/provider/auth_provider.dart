@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:sree_balagi_gold/features/auth/data/i_auth_facade.dart';
 import 'package:sree_balagi_gold/features/auth/data/model/user_model.dart';
 import 'package:sree_balagi_gold/general/service/keywords_builder.dart';
 import 'package:sree_balagi_gold/general/utils/app_details.dart';
+import 'package:sree_balagi_gold/general/widgets/custom_toast.dart';
 
 class AuthProvider extends ChangeNotifier {
   AuthProvider(this._iAuthFacade);
@@ -96,6 +99,38 @@ class AuthProvider extends ChangeNotifier {
       userModel = event;
       notifyListeners();
     });
+  }
+
+  Future<void> logOut(BuildContext context,
+      {required VoidCallback success}) async {
+    final result = await _iAuthFacade.logOut();
+    result.fold(
+      (l) {
+        log(l.msg);
+        CToast.error(msg: l.msg);
+      },
+      (r) {
+        userModel = null;
+        success();
+      },
+    );
+  }
+
+  Future<void> deleteAccount({
+    required VoidCallback onSuccess,
+    required void Function(String error) onFailure,
+  }) async {
+    final result = await _iAuthFacade.deleteAccount();
+    result.fold(
+      (error) {
+        onFailure(error.msg);
+      },
+      (success) {
+        userModel = null;
+        onSuccess();
+      },
+    );
+    notifyListeners();
   }
 
   Future<void> setLastAppOpenTime() async {

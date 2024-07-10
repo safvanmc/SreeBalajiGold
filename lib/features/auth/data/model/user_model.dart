@@ -1,7 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserModel {
@@ -69,7 +67,7 @@ class UserModel {
       'lastEntryTime': lastEntryTime ?? FieldValue.serverTimestamp(),
       'blockReason': blockReason,
       'favorites': [],
-      'cart': [],
+      'cart': {},
     };
   }
 
@@ -87,18 +85,38 @@ class UserModel {
     };
   }
 
+  Map<String, dynamic> ordertoMap() {
+    return <String, dynamic>{
+      'id': id,
+      'name': name,
+      'phoneNumber': phoneNumber,
+      'shopName': shopName,
+      'shopAddress': shopAddress,
+      'photoUrl': photoUrl,
+    };
+  }
+
   factory UserModel.fromMap(Map<String, dynamic> map) {
     List<Map<String, dynamic>> cart = [];
-    final cartMap = map['cart'] as Map;
-    log(cartMap.runtimeType.toString());
-    cartMap.forEach(
-      (key, value) {
-        cart.add({
-          key: value,
-        });
-      },
-    );
-    // print(cart);
+    final cartMap = map['cart'] as Map<String, dynamic>?;
+    if (cartMap != null) {
+      // log(cartMap.runtimeType.toString());
+      cartMap.forEach(
+        (key, value) {
+          cart.add({
+            key: value,
+          });
+        },
+      );
+
+      cart.sort((a, b) {
+        int aDate =
+            (a.values.first['createdAt'] as Timestamp).microsecondsSinceEpoch;
+        int bDate =
+            (b.values.first['createdAt'] as Timestamp).microsecondsSinceEpoch;
+        return aDate.compareTo(bDate);
+      });
+    }
 
     return UserModel(
       id: map['id'] != null ? map['id'] as String : null,
@@ -113,7 +131,7 @@ class UserModel {
           map['updatedAt'] != null ? map['updatedAt'] as Timestamp : null,
       fcmToken: map['fcmToken'] != null ? map['fcmToken'] as String : null,
       isBlocked: map['isBlocked'] as bool?,
-      accountStatusIndex: map['accountStatusIndex'] as int,
+      accountStatusIndex: map['accountStatusIndex'] as int? ?? 0,
       rejectReason:
           map['rejectReason'] != null ? map['rejectReason'] as String : null,
       shopName: map['shopName'] != null ? map['shopName'] as String : null,

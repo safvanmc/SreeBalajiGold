@@ -3,29 +3,25 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sree_balagi_gold/features/auth/presentation/provider/auth_provider.dart';
-import 'package:sree_balagi_gold/features/sub_category/data/i_sub_category_facade.dart';
-import 'package:sree_balagi_gold/features/sub_category/data/model/sub_category_model.dart';
+import 'package:sree_balagi_gold/features/my_orders/data/i_order_facade.dart';
+import 'package:sree_balagi_gold/features/my_orders/data/model/my_order_model.dart';
 import 'package:sree_balagi_gold/general/widgets/custom_toast.dart';
 
-class SubCategoryProvider extends ChangeNotifier {
-  SubCategoryProvider(
-    this._iSubCategoryFacade,
-  );
-  final ISubCategoryFacade _iSubCategoryFacade;
+class OrderProvider extends ChangeNotifier {
+  final IOrderFacade iOrderFacade;
+  OrderProvider(this.iOrderFacade);
+  List<MyOrderModel> orderList = [];
   bool _isProgress = false;
   bool isLoading = true;
   bool isMoreDataLoading = true;
-  List<SubCategoryModel> subCategoryList = [];
-
   void initData({
     required BuildContext context,
     required ScrollController scrollController,
-    required String mainCategoryID,
   }) {
-    if (subCategoryList.isEmpty) {
-      clearData();
-      _fetchData(context, mainCategoryID: mainCategoryID);
-    }
+    //   if (orderList.isEmpty) {
+    clearData();
+    getOrders(context);
+    // }
 
     scrollController.addListener(
       () {
@@ -35,32 +31,21 @@ class SubCategoryProvider extends ChangeNotifier {
         if ((maxScroll - currentScroll) <= delta &&
             _isProgress == false &&
             isMoreDataLoading == true) {
-          _fetchData(context, mainCategoryID: mainCategoryID);
+          getOrders(context);
         }
       },
     );
   }
 
-  Future<void> _fetchData(BuildContext context,
-      {required String mainCategoryID}) async {
+  Future<void> getOrders(BuildContext context) async {
     if (_isProgress) return;
     _isProgress = true;
-    if (subCategoryList.isEmpty) {
+    if (orderList.isEmpty) {
       isLoading = true;
       // notifyListeners();
     }
-    final user = context.read<AuthProvider>().userModel;
-    if (user == null) {
-      CToast.error(
-        msg: 'User null',
-      );
-      return;
-    }
-
-    final result = await _iSubCategoryFacade.fetchSubCategory(
-      mainCategoryID: mainCategoryID,
-      userID: user.id!,
-    );
+    final userId = context.read<AuthProvider>().userModel!.id;
+    final result = await iOrderFacade.getOrders(userId: userId!);
     result.fold(
       (l) {
         l.maybeMap(
@@ -81,9 +66,9 @@ class SubCategoryProvider extends ChangeNotifier {
       },
       (list) {
         isLoading = false;
-        subCategoryList = [...subCategoryList, ...list];
+        orderList = [...orderList, ...list];
         // // CHECK IF REEL VIDEO LIST IS EMPTY OR LESS THAN 10
-        if (subCategoryList.length < 10 || subCategoryList.isEmpty) {
+        if (orderList.length < 10 || orderList.isEmpty) {
           isMoreDataLoading = false;
         }
       },
@@ -92,9 +77,14 @@ class SubCategoryProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  // void changeLoading(bool value) {
+  //   isLoading = value;
+  // }
+
   void clearData() {
-    subCategoryList = [];
-    _iSubCategoryFacade.clearData();
+    orderList = [];
+    iOrderFacade.clearData();
     isMoreDataLoading = true;
+    // notifyListeners();
   }
 }

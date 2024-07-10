@@ -6,39 +6,38 @@ import 'package:sree_balagi_gold/features/auth/presentation/provider/auth_provid
 import 'package:sree_balagi_gold/features/cart/data/i_cart_facade.dart';
 import 'package:sree_balagi_gold/features/cart/data/model/cart_model.dart';
 import 'package:sree_balagi_gold/features/category_product_display/data/model/product_model.dart';
-import 'package:sree_balagi_gold/general/service/custom_toast.dart';
+import 'package:sree_balagi_gold/general/service/easy_navigator.dart';
+import 'package:sree_balagi_gold/general/widgets/custom_toast.dart';
+import 'package:sree_balagi_gold/general/widgets/show_progress.dart';
 
 class CartProvider extends ChangeNotifier {
   final ICartFacade iCartFacade;
   CartProvider(this.iCartFacade);
   List<CartModel> cartList = [];
-  int itemCount = 1;
   bool isLoading = true;
-
-  // bool isCarted({
-  //   required BuildContext context,
-  //   required ProductModel productModel,
-  // }) {
-  //   return context
-  //       .read<AuthProvider>()
-  //       .userModel!
-  //       .cart!
-  //       .any((map) => map.containsKey(productModel.id));
-  // }
 
   Future<void> addtoCart(
     BuildContext context,
     ProductModel model,
   ) async {
+    if (totalQty(context) >= 100) {
+      CToast.info(
+        msg: 'Your order limit of 100 reached. Please try in the next order',
+      );
+
+      return;
+    }
     final userModel = context.read<AuthProvider>().userModel;
     if (userModel == null) {
       CToast.error(
-        context,
-        description: 'User null',
+        msg: 'User null',
       );
       return;
     }
-    final result = await iCartFacade.addToCart(model, userModel);
+    final result = await iCartFacade.addToCart(
+      model,
+      userModel,
+    );
     result.fold(
       (e) {
         log(e.msg);
@@ -55,12 +54,14 @@ class CartProvider extends ChangeNotifier {
 
     if (userModel == null) {
       CToast.error(
-        context,
-        description: 'User null',
+        msg: 'User null',
       );
       return;
     }
-    final result = await iCartFacade.removeFromCart(productId, userModel);
+    final result = await iCartFacade.removeFromCart(
+      productId,
+      userModel,
+    );
     result.fold(
       (e) {
         log(e.msg);
@@ -76,25 +77,78 @@ class CartProvider extends ChangeNotifier {
 
   Future<void> fetchData(BuildContext context) async {
     isLoading = true;
-    notifyListeners();
-    final productIdList = context.read<AuthProvider>().userModel?.cart ?? [];
-    final result = await iCartFacade.fetchCratData(productIdList);
+    // notifyListeners();
+    final productIdList = (context.read<AuthProvider>().userModel?.cart ?? []);
+
+    final result = await iCartFacade.fetchCartData(productIdList);
     result.fold(
       (l) {
         log("-----------${l.msg}");
       },
       (r) {
-        cartList.addAll(r);
+        cartList = r;
       },
     );
     isLoading = false;
     notifyListeners();
   }
 
+  num get totalGrossWeight {
+    num total = 0;
+    for (var element in cartList) {
+      total = total + (element.grossWeight * (element.qty ?? 1));
+    }
+    return total;
+  }
+
+  num get totalNetWeight {
+    num total = 0;
+    for (var element in cartList) {
+      total = total + (element.netWeight * (element.qty ?? 1));
+    }
+    return total;
+  }
+
+  num get totalPieces {
+    num total = 0;
+    for (var element in cartList) {
+      total = total + (element.pieces * (element.qty ?? 1));
+    }
+    return total;
+  }
+
+  num totalQty(BuildContext context) {
+    final userModel = context.read<AuthProvider>().userModel;
+    num total = 0;
+    for (Map<String, dynamic> element in userModel?.cart ?? []) {
+      final id = element.entries.first.key;
+
+      total = total + (element[id]['qty']);
+    }
+    return total;
+  }
+
+  num productTotalMaterialprice(String productId) {
+    num total = 0;
+    final product = cartList.firstWhere(
+      (element) => element.id == productId,
+    );
+    for (var element in product.materials) {
+      total = total + element.total;
+    }
+
+    return total;
+  }
+
   Future<void> addQty(
     BuildContext context, {
     required CartModel cartModel,
   }) async {
+    if (totalQty(context) >= 100) {
+      CToast.warning(
+          msg: 'Your order limit of 100 reached. Please try in the next order');
+      return;
+    }
     final index = cartList.indexWhere(
       (element) => element.id == cartModel.id,
     );
@@ -124,8 +178,69 @@ class CartProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void clearData() {
-    cartList.clear();
+  Future<void> addremarks(
+    BuildContext context, {
+    required CartModel cartModel,
+    required String? remarks,
+  }) async {
+    final index = cartList.indexWhere(
+      (element) => element.id == cartModel.id,
+    );
+
+    cartList[index].remark = remarks;
+    final userModel = context.read<AuthProvider>().userModel;
+    iCartFacade.changeRemark(
+      cartList[index],
+      userModel!,
+    );
     notifyListeners();
+  }
+
+  Future<void> removeRemark(
+    BuildContext context, {
+    required CartModel cartModel,
+  }) async {
+    final index = cartList.indexWhere(
+      (element) => element.id == cartModel.id,
+    );
+
+    cartList[index].remark = null;
+    final userModel = context.read<AuthProvider>().userModel;
+    iCartFacade.changeRemark(
+      cartList[index],
+      userModel!,
+    );
+    notifyListeners();
+  }
+
+  void clearData() {
+    cartList = [];
+    // notifyListeners();
+  }
+
+  Future<void> placedOrder(
+    BuildContext context, {
+    required VoidCallback success,
+  }) async {
+    final userModel = context.read<AuthProvider>().userModel;
+    showProgress(context);
+
+    final result = await iCartFacade.placeOrder(
+      userModel!,
+      cartList,
+    );
+    result.fold(
+      (l) {
+        EasyNavigator.pop(context);
+        log(l.msg);
+        CToast.error(
+          msg: l.msg,
+        );
+      },
+      (r) {
+        EasyNavigator.pop(context);
+        success();
+      },
+    );
   }
 }

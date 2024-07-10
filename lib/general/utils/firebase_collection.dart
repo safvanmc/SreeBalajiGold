@@ -6,4 +6,5 @@ class FirebaseCollection {
   static const subCategory = 'sub_category';
   static const product = 'product';
   static const banners = 'banners';
+  static const orders = 'orders';
 }

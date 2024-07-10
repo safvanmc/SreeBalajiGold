@@ -14,7 +14,7 @@ class CartModel {
   final String? mainCategoryId;
   final String? subCategoryId;
   final Timestamp? createdAt;
-  final String? remark;
+  String? remark;
   int? qty;
   CartModel({
     required this.productUrl,
@@ -71,7 +71,6 @@ class CartModel {
       'grossWeight': grossWeight,
       'netWeight': netWeight,
       'pieces': pieces,
-      // 'total': total,
       'materials': materials.map((x) => x.toMap()).toList(),
       'id': id,
       'mainCategoryId': mainCategoryId,
@@ -85,7 +84,6 @@ class CartModel {
   factory CartModel.fromMap(Map<String, dynamic> map) {
     return CartModel(
       productUrl: List<String>.from(map['productUrl']),
-      // total: map['total'] as num,
       serialNumber: map['serialNumber'] as String,
       grossWeight: map['grossWeight'] as num,
       netWeight: map['netWeight'] as num,

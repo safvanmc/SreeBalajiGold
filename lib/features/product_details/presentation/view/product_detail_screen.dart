@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:provider/provider.dart';
+import 'package:sree_balagi_gold/features/auth/presentation/provider/auth_provider.dart';
+import 'package:sree_balagi_gold/features/cart/presentation/provider/cart_provider.dart';
+import 'package:sree_balagi_gold/features/cart/presentation/view/cart_screen.dart';
 import 'package:sree_balagi_gold/features/category_product_display/data/model/product_model.dart';
 import 'package:sree_balagi_gold/features/product_details/presentation/view/widgets/horizontal_image_view.dart';
 import 'package:sree_balagi_gold/features/product_details/presentation/view/widgets/material_detail_frame.dart';
 import 'package:sree_balagi_gold/features/product_details/presentation/view/widgets/product_image_view.dart';
 import 'package:sree_balagi_gold/features/product_details/presentation/view/widgets/productdetails_tabview.dart';
 import 'package:sree_balagi_gold/features/sub_category/data/model/sub_category_model.dart';
+import 'package:sree_balagi_gold/general/service/easy_navigator.dart';
 import 'package:sree_balagi_gold/general/utils/app_color.dart';
-
 import 'package:sree_balagi_gold/general/utils/text_style.dart';
+import 'package:sree_balagi_gold/general/widgets/add_cart_button.dart';
 
 class ProductDetailScreen extends StatelessWidget {
   const ProductDetailScreen({
@@ -100,7 +105,7 @@ class ProductDetailScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                     Expanded(
+                    Expanded(
                       child: TabBarView(children: [
                         ProductDetailTabView(
                           productModel: productModel,
@@ -116,7 +121,35 @@ class ProductDetailScreen extends StatelessWidget {
             ),
           ],
         ),
-        // bottomNavigationBar: const BottomCartButton(),
+        bottomNavigationBar: Container(
+          height: 65,
+          color: Colors.white,
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+          child: AddToCartButton(
+            onPressed: () {
+              if (context.read<AuthProvider>().userModel!.cart!.any(
+                    (map) => map.containsKey(productModel.id),
+                  )) {
+                EasyNavigator.push(context,
+                    child: const CartScreen(
+                      needAppBar: true,
+                    ));
+              } else {
+                context.read<CartProvider>().addtoCart(
+                      context,
+                      productModel,
+                    );
+              }
+            },
+            height: 45,
+            width: 100,
+            addIcon: Icons.shopping_cart_outlined,
+            removeIcon: Icons.shopping_cart_outlined,
+            remove: 'GO TO CART',
+            add: 'ADD TO CART',
+            productModel: productModel,
+          ),
+        ),
       ),
     );
   }

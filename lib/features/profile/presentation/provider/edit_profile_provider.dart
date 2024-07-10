@@ -6,10 +6,10 @@ import 'package:provider/provider.dart';
 import 'package:sree_balagi_gold/features/auth/data/model/user_model.dart';
 import 'package:sree_balagi_gold/features/auth/presentation/provider/auth_provider.dart';
 import 'package:sree_balagi_gold/features/profile/data/i_profile_facade.dart';
-import 'package:sree_balagi_gold/general/service/custom_toast.dart';
 import 'package:sree_balagi_gold/general/service/image_pick.dart';
 import 'package:sree_balagi_gold/general/service/image_upload_service.dart';
 import 'package:sree_balagi_gold/general/service/keywords_builder.dart';
+import 'package:sree_balagi_gold/general/widgets/custom_toast.dart';
 
 class EditProfileProvider extends ChangeNotifier {
   final IProfileFacade iProfileFacde;
@@ -50,7 +50,7 @@ class EditProfileProvider extends ChangeNotifier {
 
       result.fold(
         (e) {
-          CToast.error(context, description: e.msg);
+          CToast.error(msg: e.msg);
           return;
         },
         (succus) async {
@@ -82,11 +82,10 @@ class EditProfileProvider extends ChangeNotifier {
     );
     result.fold(
       (l) {
-        CToast.error(context, description: l.msg);
+        CToast.error(msg: l.msg);
       },
       (r) {
-        CToast.successMessage(context,
-            description: 'Profile Saved Successfully');
+        CToast.success(msg: 'Profile Saved Successfully');
       },
     );
   }

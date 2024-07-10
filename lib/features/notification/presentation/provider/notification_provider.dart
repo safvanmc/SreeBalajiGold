@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:sree_balagi_gold/features/notification/data/i_notification_facade.dart';
 import 'package:sree_balagi_gold/features/notification/data/model/notification_model.dart';
-import 'package:sree_balagi_gold/general/service/custom_toast.dart';
+import 'package:sree_balagi_gold/general/widgets/custom_toast.dart';
 
 class NotificationProvider extends ChangeNotifier {
   NotificationProvider(
@@ -58,9 +58,8 @@ class NotificationProvider extends ChangeNotifier {
           serverFailure: (err) {
             isLoading = false;
 
-            CToast.errorMessage(
-              context,
-              description: err.msg,
+            CToast.error(
+              msg: err.msg,
             );
           },
         );
@@ -71,7 +70,6 @@ class NotificationProvider extends ChangeNotifier {
         // // CHECK IF REEL VIDEO LIST IS EMPTY OR LESS THAN 10
         if (notificationList.length < 10 || notificationList.isEmpty) {
           isMoreDataLoading = false;
-          
         }
       },
     );

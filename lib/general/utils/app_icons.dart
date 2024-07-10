@@ -30,4 +30,5 @@ class AppIcons {
   static const notifyTime = '${bri}notifytime.png';
   static const call = '${bri}call.png';
   static const editImage = '${bri}edit_image.png';
+  static const delete = '${bri}delete.png';
 }

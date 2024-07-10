@@ -28,4 +28,12 @@ abstract class IAuthFacade {
   FutureResult<Unit> setLastAppOpenTime() async {
     throw UnimplementedError('lastAppOpenTime() Not implemented');
   }
+
+  FutureResult<Unit> logOut() async {
+    throw UnimplementedError('logOut() Not implemented');
+  }
+
+  FutureResult<Unit> deleteAccount() async {
+    throw UnimplementedError('deleteAccount() Not implemented');
+  }
 }

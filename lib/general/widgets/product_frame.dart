@@ -1,6 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
+import 'package:sree_balagi_gold/features/auth/presentation/provider/auth_provider.dart';
+import 'package:sree_balagi_gold/features/cart/presentation/provider/cart_provider.dart';
 import 'package:sree_balagi_gold/features/category_product_display/data/model/product_model.dart';
 import 'package:sree_balagi_gold/features/favorite/presentation/provider/favorite_provider.dart';
 import 'package:sree_balagi_gold/general/utils/app_color.dart';
@@ -124,7 +127,27 @@ class ProductFrame extends StatelessWidget {
                         ),
                         const Gap(2),
                         AddToCartButton(
+                          onPressed: () {
+                            if (context
+                                .read<AuthProvider>()
+                                .userModel!
+                                .cart!
+                                .any((map) =>
+                                    map.containsKey(productModel.id))) {
+                              context.read<CartProvider>().removeFromCart(
+                                  context,
+                                  productId: productModel.id);
+                            } else {
+                              context
+                                  .read<CartProvider>()
+                                  .addtoCart(context, productModel);
+                            }
+                          },
                           productModel: productModel,
+                          add: 'Add',
+                          remove: 'Remove',
+                          removeIcon: CupertinoIcons.delete,
+                          addIcon: Icons.shopping_cart_outlined,
                           height: 35,
                           width: 80,
                         )

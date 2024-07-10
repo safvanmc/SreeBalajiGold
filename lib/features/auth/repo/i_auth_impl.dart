@@ -319,8 +319,14 @@ class IAuthImpl implements IAuthFacade {
 
     final snapshot =
         firestore.collection(FirebaseCollection.users).doc(userId).snapshots();
-    final user = snapshot.map(
-        (event) => UserModel.fromMap(event.data() as Map<String, dynamic>));
+
+    final user = snapshot.map((event) {
+      if (event.exists) {
+        return UserModel.fromMap(event.data() as Map<String, dynamic>);
+      } else {
+        return null;
+      }
+    });
     yield* user;
   }
 
@@ -343,6 +349,35 @@ class IAuthImpl implements IAuthFacade {
       return left(
         MainFailure.serverFailure(
           msg: e.toString(),
+        ),
+      );
+    }
+  }
+
+  @override
+  FutureResult<Unit> logOut() async {
+    try {
+      log(firebaseAuth.currentUser!.uid);
+      await firebaseAuth.signOut();
+      log('${firebaseAuth.currentUser?.uid}');
+      return right(unit);
+    } catch (e) {
+      return left(MainFailure.authFailure(msg: '$e'));
+    }
+  }
+
+  @override
+  FutureResult<Unit> deleteAccount() async {
+    try {
+      final docId = firebaseAuth.currentUser?.uid;
+      await firestore.collection(FirebaseCollection.users).doc(docId).delete();
+      await firebaseAuth.signOut();
+      await firebaseMessaging.unsubscribeFromTopic('all');
+      return right(unit);
+    } on FirebaseAuthException catch (e) {
+      return left(
+        MainFailure.authFailure(
+          msg: e.message ?? "Failed to LogOut",
         ),
       );
     }

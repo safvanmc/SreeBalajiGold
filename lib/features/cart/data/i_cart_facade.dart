@@ -13,7 +13,7 @@ abstract class ICartFacade {
     throw UnimplementedError('addtoCart() not imlemented');
   }
 
-  FutureResult<List<CartModel>> fetchCratData(
+  FutureResult<List<CartModel>> fetchCartData(
       List<Map<String, dynamic>> productId) {
     throw UnimplementedError('GetCart() not imlemented');
   }
@@ -24,5 +24,14 @@ abstract class ICartFacade {
 
   FutureResult<Unit> removeQty(CartModel model, UserModel userModel) {
     throw UnimplementedError('addQty() not imlemented');
+  }
+
+  FutureResult<Unit> changeRemark(CartModel model, UserModel userModel) {
+    throw UnimplementedError('addRemark() not imlemented');
+  }
+
+  FutureResult<Unit> placeOrder(
+      UserModel userModel, List<CartModel> cartModel) {
+    throw UnimplementedError('placeOrder() not imlemented');
   }
 }

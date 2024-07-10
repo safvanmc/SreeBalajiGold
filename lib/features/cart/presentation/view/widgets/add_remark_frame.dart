@@ -2,18 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:sree_balagi_gold/general/service/easy_navigator.dart';
 import 'package:sree_balagi_gold/general/utils/app_color.dart';
 
-void addRemarkFrame(BuildContext context) async {
+void addRemarkFrame(BuildContext context,
+    {required void Function()? onPressed,
+    required TextEditingController? controller,
+    required Key? formKey}) async {
   return showDialog(
     context: context,
-    builder: (context) => const CustomDialog(),
+    builder: (context) => CustomDialog(
+      onPressed: onPressed,
+      controller: controller,
+      formKey: formKey,
+    ),
   );
 }
 
 class CustomDialog extends StatelessWidget {
   const CustomDialog({
     super.key,
+    required this.onPressed,
+    required this.controller,
+    required this.formKey,
   });
-
+  final void Function()? onPressed;
+  final TextEditingController? controller;
+  final Key? formKey;
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -26,25 +38,28 @@ class CustomDialog extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
-      content: const TextField(
-        textInputAction: TextInputAction.newline,
-        keyboardType: TextInputType.multiline,
-        minLines: 3,
-        maxLines: 5,
-        style: TextStyle(
-          fontSize: 13,
-          fontWeight: FontWeight.w600,
-          decoration: TextDecoration.none,
-          decorationThickness: 0,
-        ),
-        decoration: InputDecoration(
-          border: InputBorder.none,
-          hintText: "add remark",
-          hintStyle: TextStyle(
-            color: Color(0xFF6D5959),
-            fontSize: 12,
-            fontWeight: FontWeight.w400,
-            height: 0,
+      content: Form(
+        key: formKey,
+        child: TextFormField(
+          textInputAction: TextInputAction.newline,
+          keyboardType: TextInputType.multiline,
+          minLines: 3,
+          maxLines: 5,
+          style: const TextStyle(fontSize: 14, decoration: TextDecoration.none),
+          controller: controller,
+          validator: (value) {
+            if (value == null || value.isEmpty) return 'please add a remark';
+            return null;
+          },
+          decoration: const InputDecoration(
+            border: InputBorder.none,
+            hintText: "add remark",
+            hintStyle: TextStyle(
+              color: Color(0xFF6D5959),
+              fontSize: 12,
+              fontWeight: FontWeight.w400,
+              height: 0,
+            ),
           ),
         ),
       ),
@@ -64,10 +79,7 @@ class CustomDialog extends StatelessWidget {
               )),
         ),
         TextButton(
-            onPressed: () {
-              // handle add button press
-              Navigator.pop(context);
-            },
+            onPressed: onPressed,
             style: const ButtonStyle(
               maximumSize: WidgetStatePropertyAll(
                 Size(50, 35),

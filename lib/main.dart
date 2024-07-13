@@ -26,6 +26,7 @@ import 'package:sree_balagi_gold/features/splash_screen.dart/presentation/view/s
 import 'package:sree_balagi_gold/features/sub_category/data/i_sub_category_facade.dart';
 import 'package:sree_balagi_gold/features/sub_category/presentation/provider/sub_category_provider.dart';
 import 'package:sree_balagi_gold/general/core/di/injection.dart';
+import 'package:sree_balagi_gold/general/service/firebase_messaging.dart';
 import 'package:sree_balagi_gold/general/utils/app_details.dart';
 import 'package:sree_balagi_gold/general/utils/app_fonts.dart';
 import 'package:sree_balagi_gold/general/utils/text_style.dart';
@@ -34,6 +35,7 @@ import 'package:toastification/toastification.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await configureDependancy();
+  await FirebaseFCMApi().initNotification();
   SystemChrome.setPreferredOrientations(
     [
       DeviceOrientation.portraitUp,

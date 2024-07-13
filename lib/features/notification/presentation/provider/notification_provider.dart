@@ -14,14 +14,17 @@ class NotificationProvider extends ChangeNotifier {
   bool isLoading = true;
   bool isMoreDataLoading = true;
   List<NotificationModel> notificationList = [];
-
+  bool isRefresh = true;
   void initData({
     required BuildContext context,
     required ScrollController scrollController,
   }) {
-    if (notificationList.isEmpty) {
+    log('don');
+    if (notificationList.isEmpty || isRefresh) {
+      log('clear');
       clearData();
       _fetchData(context);
+      isRefresh = false;
     }
 
     scrollController.addListener(
@@ -36,6 +39,12 @@ class NotificationProvider extends ChangeNotifier {
         }
       },
     );
+  }
+
+  isRefreshorNot(bool value) {
+    isRefresh = true;
+    log('okok');
+    notifyListeners();
   }
 
   Future<void> _fetchData(BuildContext context) async {

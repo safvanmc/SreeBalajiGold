@@ -3,6 +3,8 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:sree_balagi_gold/features/auth/data/i_auth_facade.dart';
 import 'package:sree_balagi_gold/features/auth/data/model/user_model.dart';
+import 'package:sree_balagi_gold/features/splash_screen.dart/presentation/view/splash_screen.dart';
+import 'package:sree_balagi_gold/general/service/easy_navigator.dart';
 import 'package:sree_balagi_gold/general/service/keywords_builder.dart';
 import 'package:sree_balagi_gold/general/utils/app_details.dart';
 import 'package:sree_balagi_gold/general/widgets/custom_toast.dart';
@@ -135,5 +137,18 @@ class AuthProvider extends ChangeNotifier {
 
   Future<void> setLastAppOpenTime() async {
     await _iAuthFacade.setLastAppOpenTime();
+  }
+
+  Future<void> addScreenShotRemark(BuildContext context) async {
+    final result = await _iAuthFacade.addScreeenShotRemark(userModel!);
+    result.fold(
+      (l) {
+        log(l.msg);
+      },
+      (r) {
+        log('blocked');
+        EasyNavigator.pushAndRemoveUntil(context, child: const SplashScreen());
+      },
+    );
   }
 }

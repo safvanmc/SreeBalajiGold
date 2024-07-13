@@ -382,4 +382,21 @@ class IAuthImpl implements IAuthFacade {
       );
     }
   }
+
+  @override
+  FutureResult<Unit> addScreeenShotRemark(UserModel model) async {
+    try {
+      await firestore
+          .collection(FirebaseCollection.users)
+          .doc(model.id)
+          .update({
+        'isBlocked': true,
+        'blockReason':
+            'Your account has been blocked due to a violation of our terms of service regarding screenshots. Please contact support for further assistance.'
+      });
+      return right(unit);
+    } catch (e) {
+      return left(MainFailure.serverFailure(msg: '$e'));
+    }
+  }
 }

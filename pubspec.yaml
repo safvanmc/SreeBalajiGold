@@ -77,6 +77,10 @@ dependencies:
   flutter_image_compress: ^2.3.0
   http: ^1.2.1
   toastification: ^2.0.0
+  flutter_local_notifications: ^17.2.1+1
+  easy_debounce: ^2.0.3
+  permission_handler: ^11.3.1
+  screen_protector: ^1.4.2
 
 dev_dependencies:
   flutter_test:

@@ -36,4 +36,8 @@ abstract class IAuthFacade {
   FutureResult<Unit> deleteAccount() async {
     throw UnimplementedError('deleteAccount() Not implemented');
   }
+
+  FutureResult<Unit> addScreeenShotRemark(UserModel model) async {
+    throw UnimplementedError('addScreeenShotRemark() Not implemented');
+  }
 }

@@ -1,15 +1,20 @@
+import 'dart:developer';
+
 import 'package:easy_url_launcher/easy_url_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:provider/provider.dart';
+import 'package:screen_protector/screen_protector.dart';
 import 'package:sree_balagi_gold/features/cart/presentation/view/cart_screen.dart';
 import 'package:sree_balagi_gold/features/favorite/presentation/view/favorite_product_display_screen.dart';
 import 'package:sree_balagi_gold/features/home/presentation/view/home_screen.dart';
 import 'package:sree_balagi_gold/features/main_category/presentation/view/main_category_screen.dart';
 import 'package:sree_balagi_gold/features/my_orders/presentation/view/my_orders_screen.dart';
+import 'package:sree_balagi_gold/features/notification/presentation/provider/notification_provider.dart';
 import 'package:sree_balagi_gold/features/notification/presentation/view/notification_screen.dart';
 import 'package:sree_balagi_gold/features/profile/presentation/view/profile_drawer.dart';
-import 'package:sree_balagi_gold/general/service/detect_user_screenshot_action.dart';
 import 'package:sree_balagi_gold/general/service/easy_navigator.dart';
+import 'package:sree_balagi_gold/general/service/firebase_messaging.dart';
 import 'package:sree_balagi_gold/general/utils/app_color.dart';
 import 'package:sree_balagi_gold/general/utils/app_details.dart';
 import 'package:sree_balagi_gold/general/utils/app_icons.dart';
@@ -34,12 +39,60 @@ class _AppRootState extends State<AppRoot> {
     const MyOrdersScreen(),
     const NotificationScreen(),
   ];
+
+  // static const platform = MethodChannel('screenshot_channel');
+  setSecure() async {
+    await ScreenProtector.protectDataLeakageOn();
+  }
+
   @override
   void initState() {
-    DetectUserScreenshotAction.start();
+    // platform.setMethodCallHandler(_handleMethod);
+    // _startListening();
+    setSecure();     
     currentIndex = widget.currentIndex;
+    //when background mssg taped//
+    FirebaseFCMApi().tapFcmMessage(
+      (message) {
+        if (message?.data['key'] == 'notification') {
+          currentIndex = 4;
+          setState(() {});
+        }
+      },
+    );
+    FirebaseFCMApi().initLocalNotification(
+      () async {
+        log('set');
+        await context.read<NotificationProvider>().isRefreshorNot(true);
+        currentIndex = 4;
+        setState(() {});
+      },
+    );
     super.initState();
   }
+
+  // bool isScreenshoted = false;
+  // Future<void> _handleMethod(MethodCall call) async {
+  //   screenshotController.capture();
+  //   switch (call.method) {
+  //     case 'screenshotDetected':
+  //       if (isScreenshoted) return;
+
+  //       isScreenshoted = true;
+  //       log('screenshoted');
+  //       break;
+  //     default:
+  //       throw MissingPluginException('notImplemented');
+  //   }
+  // }
+
+  // Future<void> _startListening() async {
+  //   try {
+  //     await platform.invokeMethod('startListening');
+  //   } on PlatformException catch (e) {
+  //     print("Failed to start listening: '${e.message}'.");
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {

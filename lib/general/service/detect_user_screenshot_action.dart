@@ -1,18 +1,15 @@
 
 
+// class DetectUserScreenshotAction {
+//   late ScreenshotCallback screenshotCallback;
 
-class DetectUserScreenshotAction {
-  // static late ScreenshotCallbackPlus screenshotCallback;
+//   Future<void> initScreenshotCallback() async {
+//     screenshotCallback = ScreenshotCallback();
 
-  static void start() {
-    // screenshotCallback = ScreenshotCallbackPlus();
+//     screenshotCallback.initialize();
 
-    // screenshotCallback.addListener(() {
-    //   log('screen');
-    // });
-
-    // screenshotCallback.addListener(() {
-    //     log('screen 1');
-    // });
-  }
-}
+//     screenshotCallback.addListener(() {
+//       print("We can add multiple listeners ");
+//     });
+//   }
+// }

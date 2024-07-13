@@ -5,6 +5,7 @@ import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 import 'package:sree_balagi_gold/features/app_root.dart';
 import 'package:sree_balagi_gold/features/auth/presentation/provider/auth_provider.dart';
+import 'package:sree_balagi_gold/features/auth/presentation/view/blocked_screen.dart';
 import 'package:sree_balagi_gold/features/auth/presentation/view/pending_verification_screen.dart';
 import 'package:sree_balagi_gold/features/auth/presentation/view/register_or_login_screen.dart';
 import 'package:sree_balagi_gold/features/auth/presentation/view/rejected_approval_screen.dart';
@@ -134,7 +135,7 @@ class _SplashScreenState extends State<SplashScreen>
                     height: 40,
                     width: 150,
                     color: AppColors.secondaryColor,
-                    onPressed: () {
+                    onPressed: () async {
                       init();
                     },
                     child: Row(
@@ -175,6 +176,13 @@ class _SplashScreenState extends State<SplashScreen>
       return;
     }
     context.read<AuthProvider>().setLastAppOpenTime();
+    if (userModel.isBlocked == true) {
+      EasyNavigator.pushReplacement(
+        context,
+        child: const BlockedScreen(),
+      );
+      return;
+    }
     if (userModel.accountStatusIndex == 0) {
       EasyNavigator.pushReplacement(
         context,

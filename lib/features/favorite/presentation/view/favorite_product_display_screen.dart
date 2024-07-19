@@ -3,6 +3,9 @@ import 'package:provider/provider.dart';
 import 'package:sree_balagi_gold/features/auth/presentation/provider/auth_provider.dart';
 import 'package:sree_balagi_gold/features/favorite/presentation/provider/favorite_provider.dart';
 import 'package:sree_balagi_gold/features/favorite/presentation/view/widgets/favorite_product_frame.dart';
+import 'package:sree_balagi_gold/features/product_details/presentation/view/product_detail_screen.dart';
+import 'package:sree_balagi_gold/features/sub_category/presentation/provider/sub_category_provider.dart';
+import 'package:sree_balagi_gold/general/service/easy_navigator.dart';
 import 'package:sree_balagi_gold/general/utils/app_color.dart';
 import 'package:sree_balagi_gold/general/widgets/custom_loading.dart';
 
@@ -70,8 +73,23 @@ class _FavoriteProductDisplayScreenState
                     : SliverList.builder(
                         itemCount: state.list.length,
                         itemBuilder: (context, index) {
-                          return FavoriteProductFrame(
-                            productModel: state.list[index],
+                          return InkWell(
+                            onTap: () {
+                              final subCategory = context
+                                  .read<SubCategoryProvider>()
+                                  .subCategoryList
+                                  .where((element) =>
+                                      element.id ==
+                                      state.list[index].subCategoryId);
+                              EasyNavigator.push(context,
+                                  child: ProductDetailScreen(
+                                    secondCategoryName: subCategory.first.name,
+                                    productModel: state.list[index],
+                                  ));
+                            },
+                            child: FavoriteProductFrame(
+                              productModel: state.list[index],
+                            ),
                           );
                         },
                       ),

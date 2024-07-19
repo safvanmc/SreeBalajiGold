@@ -49,7 +49,7 @@ class _AppRootState extends State<AppRoot> {
   void initState() {
     // platform.setMethodCallHandler(_handleMethod);
     // _startListening();
-    setSecure();     
+    setSecure();
     currentIndex = widget.currentIndex;
     //when background mssg taped//
     FirebaseFCMApi().tapFcmMessage(

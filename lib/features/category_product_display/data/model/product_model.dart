@@ -145,46 +145,52 @@ class ProductModel {
 
 //
 class ProdectMeterialModel {
-  final String type;
+  final String stoneType;
+  final String stoneName;
   final num weight;
   final num materialPieces;
-  final num total;
+  final bool isKarat;
   ProdectMeterialModel({
-    required this.type,
+    required this.stoneType,
+    required this.stoneName,
     required this.weight,
     required this.materialPieces,
-    required this.total,
+    required this.isKarat,
   });
 
   ProdectMeterialModel copyWith({
-    String? type,
+    String? stoneType,
+    String? stoneName,
     num? weight,
     num? materialPieces,
-    num? total,
+    bool? isKarat,
   }) {
     return ProdectMeterialModel(
-      type: type ?? this.type,
+      stoneType: stoneType ?? this.stoneType,
+      stoneName: stoneName ?? this.stoneName,
       weight: weight ?? this.weight,
       materialPieces: materialPieces ?? this.materialPieces,
-      total: total ?? this.total,
+      isKarat: isKarat ?? this.isKarat,
     );
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'type': type,
+      'stoneType': stoneType,
+      'stoneName': stoneName,
       'weight': weight,
       'materialPieces': materialPieces,
-      'total': total,
+      'isKarat': isKarat,
     };
   }
 
   factory ProdectMeterialModel.fromMap(Map<String, dynamic> map) {
     return ProdectMeterialModel(
-      type: map['type'] as String,
+      stoneType: map['stoneType'] as String,
+      stoneName: map['stoneName'] as String,
       weight: map['weight'] as num,
       materialPieces: map['materialPieces'] as num,
-      total: map['total'] as num,
+      isKarat: map['isKarat'] as bool,
     );
   }
 }

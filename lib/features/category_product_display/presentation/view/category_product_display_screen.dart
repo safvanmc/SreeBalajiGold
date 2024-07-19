@@ -85,7 +85,8 @@ class _CategoryProductDisplayScreenState
                                 EasyNavigator.push(
                                   context,
                                   child: ProductDetailScreen(
-                                    subCategoryModel: widget.subCategoryModel,
+                                    secondCategoryName:
+                                        widget.subCategoryModel.name,
                                     productModel: state.productList[index],
                                   ),
                                 );

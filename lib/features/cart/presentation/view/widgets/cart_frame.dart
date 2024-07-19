@@ -11,19 +11,24 @@ import 'package:sree_balagi_gold/general/widgets/confirm_dialog.dart';
 import 'package:sree_balagi_gold/general/widgets/custom_Row.dart';
 import 'package:sree_balagi_gold/general/widgets/custom_network_image.dart';
 
-class CartFrame extends StatelessWidget {
+class CartFrame extends StatefulWidget {
   const CartFrame({
     super.key,
     required this.data,
   });
   final CartModel data;
+
+  @override
+  State<CartFrame> createState() => _CartFrameState();
+}
+
+class _CartFrameState extends State<CartFrame> {
+  TextEditingController remarks = TextEditingController();
+  final key = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    TextEditingController remarks = TextEditingController();
-    final key = GlobalKey<FormState>();
     return Consumer<CartProvider>(
       builder: (context, state, _) {
-        remarks.text = data.remark ?? '';
         return GestureDetector(
           onTap: () {
             FocusScope.of(context).unfocus();
@@ -38,9 +43,9 @@ class CartFrame extends StatelessWidget {
                   children: [
                     //image section //
                     CNetworkImage(
-                      url: data.productUrl.first,
+                      url: widget.data.productUrl.first,
                       width: 100,
-                      height: 120,
+                      height: 100,
                       boxFit: BoxFit.cover,
                     ),
                     const Gap(15),
@@ -54,7 +59,7 @@ class CartFrame extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Text(
-                                data.serialNumber,
+                                widget.data.serialNumber,
                                 style: const TextStyle(
                                   color: Color(0xFF4B3A50),
                                   fontSize: 12,
@@ -74,7 +79,7 @@ class CartFrame extends StatelessWidget {
                                     onPressed: () async {
                                       await state.removeFromCart(
                                         context,
-                                        productId: data.id,
+                                        productId: widget.data.id,
                                       );
                                       nav.pop();
                                     },
@@ -85,24 +90,16 @@ class CartFrame extends StatelessWidget {
                           ),
                           const Gap(11),
                           CRowWidget(
-                              keyvalue: 'Gross Weight:',
-                              data: '${data.grossWeight}'),
+                              keyvalue: 'Gross Weight(g):',
+                              data: '${widget.data.grossWeight}'),
                           const Gap(10),
                           CRowWidget(
-                              keyvalue: 'Net Weight:',
-                              data: '${data.netWeight}'),
+                              keyvalue: 'Net Weight(g):',
+                              data: '${widget.data.netWeight}'),
                           const Gap(10),
                           CRowWidget(
                             keyvalue: 'Piece:',
-                            data: '${data.pieces}',
-                          ),
-                          const Gap(10),
-                          // CRowWidget(keyvalue: 'Total:', widget: '${data.total}'),
-                          // const Gap(10),
-                          CRowWidget(
-                            keyvalue: 'Total:',
-                            data:
-                                '${state.productTotalMaterialprice(data.id!)}',
+                            data: '${widget.data.pieces}',
                           ),
                           const Gap(10),
                         ],
@@ -114,7 +111,7 @@ class CartFrame extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    data.remark == null
+                    widget.data.remark == null
                         ? TextButton.icon(
                             iconAlignment: IconAlignment.start,
                             style: const ButtonStyle(
@@ -129,7 +126,7 @@ class CartFrame extends StatelessWidget {
                                   if (key.currentState!.validate()) {
                                     await state.addremarks(
                                       context,
-                                      cartModel: data,
+                                      cartModel: widget.data,
                                       remarks: remarks.text,
                                     );
                                   }
@@ -163,7 +160,7 @@ class CartFrame extends StatelessWidget {
                                       if (key.currentState!.validate()) {
                                         await state.addremarks(
                                           context,
-                                          cartModel: data,
+                                          cartModel: widget.data,
                                           remarks: remarks.text,
                                         );
                                       }
@@ -185,7 +182,7 @@ class CartFrame extends StatelessWidget {
                                   width: 100,
                                   height: 20,
                                   child: Text(
-                                    data.remark!,
+                                    widget.data.remark!,
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                 ),
@@ -196,7 +193,8 @@ class CartFrame extends StatelessWidget {
                                   size: 17,
                                 ),
                                 onPressed: () {
-                                  state.removeRemark(context, cartModel: data);
+                                  state.removeRemark(context,
+                                      cartModel: widget.data);
                                 },
                               ),
                             ],
@@ -209,13 +207,13 @@ class CartFrame extends StatelessWidget {
                           ontap: () {
                             state.removeQty(
                               context,
-                              cartModel: data,
+                              cartModel: widget.data,
                             );
                           },
                         ),
                         const Gap(15),
                         Text(
-                          data.qty.toString(),
+                          widget.data.qty.toString(),
                           style: const TextStyle(
                             color: Colors.black,
                             fontSize: 18,
@@ -229,7 +227,7 @@ class CartFrame extends StatelessWidget {
                           ontap: () {
                             state.addQty(
                               context,
-                              cartModel: data,
+                              cartModel: widget.data,
                             );
                           },
                         )

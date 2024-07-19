@@ -62,7 +62,6 @@ class MainCategoryProvider extends ChangeNotifier {
           noData: (noData) {
             isLoading = false;
             isMoreDataLoading = false;
-            log(noData.msg);
           },
           serverFailure: (err) {
             isLoading = false;
@@ -76,12 +75,13 @@ class MainCategoryProvider extends ChangeNotifier {
       (list) {
         isLoading = false;
         mainCategoryList = [...mainCategoryList, ...list];
-        // // CHECK IF REEL VIDEO LIST IS EMPTY OR LESS THAN 10
+        //
         if (mainCategoryList.length < 10 || mainCategoryList.isEmpty) {
           isMoreDataLoading = false;
         }
       },
     );
+    log('isLoading $isLoading');
     _isProgress = false;
     notifyListeners();
   }

@@ -21,10 +21,10 @@ class MaterialDetailFrame extends StatelessWidget {
           MaterialDetailRow(
             style: appTextTheme.displayMedium!
                 .copyWith(color: Colors.black, decoration: TextDecoration.none),
-            type: 'Type',
+            stoneType: 'Stone \nType',
+            stoneName: 'Stone \nName',
             piece: 'Piece',
-            weight: 'Weight',
-            total: 'Total',
+            weight: 'Weight(g)',
           ),
           const Divider(),
           const Gap(5),
@@ -37,10 +37,10 @@ class MaterialDetailFrame extends StatelessWidget {
                   children: [
                     MaterialDetailRow(
                       style: appTextTheme.displaySmall,
-                      type: material.type,
+                      stoneType: material.stoneType,
                       piece: '${material.materialPieces}',
                       weight: '${material.weight}',
-                      total: '${material.total}',
+                      stoneName: material.stoneName,
                     ),
                     const Divider(),
                     const Gap(5),

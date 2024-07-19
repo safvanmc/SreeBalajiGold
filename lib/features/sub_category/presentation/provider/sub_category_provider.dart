@@ -47,7 +47,6 @@ class SubCategoryProvider extends ChangeNotifier {
     _isProgress = true;
     if (subCategoryList.isEmpty) {
       isLoading = true;
-      // notifyListeners();
     }
     final user = context.read<AuthProvider>().userModel;
     if (user == null) {
@@ -64,15 +63,17 @@ class SubCategoryProvider extends ChangeNotifier {
     result.fold(
       (l) {
         l.maybeMap(
-          orElse: () {},
+          orElse: () {
+            isLoading = false;
+            isMoreDataLoading = false;
+          },
           noData: (noData) {
             isLoading = false;
             isMoreDataLoading = false;
-            log(noData.msg);
+            log('0${noData.msg}');
           },
           serverFailure: (err) {
             isLoading = false;
-
             CToast.error(
               msg: err.msg,
             );

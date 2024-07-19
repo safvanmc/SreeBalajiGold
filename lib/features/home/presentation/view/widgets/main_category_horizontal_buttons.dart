@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
-import 'package:sree_balagi_gold/features/main_category/data/model/main_category_model.dart'; 
+import 'package:sree_balagi_gold/features/main_category/data/model/main_category_model.dart';
 import 'package:sree_balagi_gold/features/main_category/presentation/provider/main_category_provider.dart';
 import 'package:sree_balagi_gold/general/utils/app_color.dart';
 import 'package:sree_balagi_gold/general/utils/text_style.dart';

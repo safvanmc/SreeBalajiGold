@@ -4,16 +4,17 @@ import 'package:gap/gap.dart';
 class MaterialDetailRow extends StatelessWidget {
   const MaterialDetailRow({
     super.key,
-    required this.type,
+    required this.stoneType,
     required this.weight,
     required this.piece,
-    required this.total,
     required this.style,
+    required this.stoneName,
   });
-  final String type;
+  final String stoneType;
+  final String stoneName;
   final String weight;
   final String piece;
-  final String total;
+
   final TextStyle? style;
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,14 @@ class MaterialDetailRow extends StatelessWidget {
             const Gap(2),
             Expanded(
               child: Text(
-                type,
+                stoneType,
+                style: style,
+                textAlign: TextAlign.center,
+              ),
+            ),
+            Expanded(
+              child: Text(
+                stoneName,
                 style: style,
                 textAlign: TextAlign.center,
               ),
@@ -44,14 +52,6 @@ class MaterialDetailRow extends StatelessWidget {
             Expanded(
               child: Text(
                 piece,
-                style: style,
-                textAlign: TextAlign.center,
-              ),
-            ),
-            const Gap(2),
-            Expanded(
-              child: Text(
-                total,
                 style: style,
                 textAlign: TextAlign.center,
               ),

@@ -128,18 +128,6 @@ class CartProvider extends ChangeNotifier {
     return total;
   }
 
-  num productTotalMaterialprice(String productId) {
-    num total = 0;
-    final product = cartList.firstWhere(
-      (element) => element.id == productId,
-    );
-    for (var element in product.materials) {
-      total = total + element.total;
-    }
-
-    return total;
-  }
-
   Future<void> addQty(
     BuildContext context, {
     required CartModel cartModel,

@@ -9,7 +9,6 @@ import 'package:sree_balagi_gold/features/product_details/presentation/view/widg
 import 'package:sree_balagi_gold/features/product_details/presentation/view/widgets/material_detail_frame.dart';
 import 'package:sree_balagi_gold/features/product_details/presentation/view/widgets/product_image_view.dart';
 import 'package:sree_balagi_gold/features/product_details/presentation/view/widgets/productdetails_tabview.dart';
-import 'package:sree_balagi_gold/features/sub_category/data/model/sub_category_model.dart';
 import 'package:sree_balagi_gold/general/service/easy_navigator.dart';
 import 'package:sree_balagi_gold/general/utils/app_color.dart';
 import 'package:sree_balagi_gold/general/utils/text_style.dart';
@@ -18,10 +17,10 @@ import 'package:sree_balagi_gold/general/widgets/add_cart_button.dart';
 class ProductDetailScreen extends StatelessWidget {
   const ProductDetailScreen({
     super.key,
-    required this.subCategoryModel,
+    required this.secondCategoryName,
     required this.productModel,
   });
-  final SubCategoryModel subCategoryModel;
+  final String secondCategoryName;
   final ProductModel productModel;
 
   @override
@@ -36,7 +35,7 @@ class ProductDetailScreen extends StatelessWidget {
           ),
           backgroundColor: AppColors.primaryColor,
           title: Text(
-            subCategoryModel.name,
+            secondCategoryName,
             style: const TextStyle(
               color: Colors.white,
               fontSize: 18,

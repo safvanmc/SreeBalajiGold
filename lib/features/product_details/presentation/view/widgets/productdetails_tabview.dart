@@ -24,13 +24,13 @@ class ProductDetailTabView extends StatelessWidget {
           const Divider(),
           const Gap(5),
           ProductDetailTile(
-            data: 'Gross Weight',
+            data: 'Gross Weight(g)',
             value: '${productModel.grossWeight}',
           ),
           const Divider(),
           const Gap(5),
           ProductDetailTile(
-            data: 'Net Weight',
+            data: 'Net Weight(g)',
             value: '${productModel.netWeight}',
           ),
           const Divider(),

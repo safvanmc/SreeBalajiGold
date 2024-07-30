@@ -148,7 +148,7 @@ class UserModel {
           : null,
       blockReason:
           map['blockReason'] != null ? map['blockReason'] as String : null,
-      favorites: map['favorites'] != null
+      favorites: map['favorites'] != null  
           ? List<String>.from(map['favorites'] as List<dynamic>)
           : [],
       cart: cart,

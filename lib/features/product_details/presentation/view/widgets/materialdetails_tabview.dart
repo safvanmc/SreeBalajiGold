@@ -9,12 +9,13 @@ class MaterialDetailRow extends StatelessWidget {
     required this.piece,
     required this.style,
     required this.stoneName,
+    this.child,
   });
   final String stoneType;
   final String stoneName;
   final String weight;
   final String piece;
-
+  final Widget? child;
   final TextStyle? style;
   @override
   Widget build(BuildContext context) {
@@ -42,11 +43,12 @@ class MaterialDetailRow extends StatelessWidget {
             ),
             const Gap(2),
             Expanded(
-              child: Text(
-                weight,
-                style: style,
-                textAlign: TextAlign.center,
-              ),
+              child: child ??
+                  Text(
+                    weight,
+                    style: style,
+                    textAlign: TextAlign.center,
+                  ),
             ),
             const Gap(2),
             Expanded(

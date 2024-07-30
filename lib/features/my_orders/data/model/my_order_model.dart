@@ -10,21 +10,23 @@ class MyOrderModel {
   final Timestamp? createdAt;
   final Timestamp? updatedAt;
   final UserModel user;
-
+  final int? karigarStatus;
+  final String? karigarId;
   final int orderStatus;
   //0=pending
   //1=accept
   //2=deliverd
   //3=reject
-  MyOrderModel({
-    required this.product,
-    this.id,
-    this.remark,
-    this.createdAt,
-    this.updatedAt,
-    required this.user,
-    required this.orderStatus,
-  });
+  MyOrderModel(
+      {required this.product,
+      this.id,
+      this.karigarId,
+      this.remark,
+      this.createdAt,
+      this.updatedAt,
+      required this.user,
+      required this.orderStatus,
+      this.karigarStatus});
 
   MyOrderModel copyWith({
     ProductModel? product,
@@ -34,6 +36,8 @@ class MyOrderModel {
     Timestamp? updatedAt,
     UserModel? user,
     int? orderStatus,
+    int? karigarStatus,
+    String? karigarId,
   }) {
     return MyOrderModel(
       product: product ?? this.product,
@@ -43,6 +47,8 @@ class MyOrderModel {
       updatedAt: updatedAt ?? this.updatedAt,
       user: user ?? this.user,
       orderStatus: orderStatus ?? this.orderStatus,
+      karigarStatus: karigarStatus ?? this.karigarStatus,
+      karigarId: karigarId ?? this.karigarId,
     );
   }
 
@@ -55,6 +61,8 @@ class MyOrderModel {
       'updatedAt': FieldValue.serverTimestamp(),
       'user': user.ordertoMap(),
       'orderStatus': orderStatus,
+      'karigarStatus': karigarStatus,
+      'karigarId': karigarId,
     };
   }
 
@@ -67,6 +75,8 @@ class MyOrderModel {
       updatedAt: map['updatedAt'] as Timestamp?,
       user: UserModel.fromMap(map['user'] as Map<String, dynamic>),
       orderStatus: map['orderStatus'] as int,
+      karigarId: map['karigarId'] as String?,
+      // karigarStatus:map['karigarStatus']as bool,
     );
   }
 }

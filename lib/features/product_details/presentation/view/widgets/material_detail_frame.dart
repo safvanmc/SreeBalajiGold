@@ -41,6 +41,8 @@ class MaterialDetailFrame extends StatelessWidget {
                       piece: '${material.materialPieces}',
                       weight: '${material.weight}',
                       stoneName: material.stoneName,
+                      child: Text(
+                          '${material.isKarat ? material.weight * .2 : material.weight}'),
                     ),
                     const Divider(),
                     const Gap(5),

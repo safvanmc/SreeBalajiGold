@@ -19,7 +19,9 @@ class ICartImpl implements ICartFacade {
   ICartImpl(this.firestore, this.firebaseAuth);
   @override
   FutureResult<Unit> addToCart(
-      ProductModel productModel, UserModel userModel) async {
+    ProductModel productModel,
+    UserModel userModel,
+  ) async {
     try {
       final createdAt = await getNetworkTime();
       firestore.collection(FirebaseCollection.users).doc(userModel.id).update(
@@ -98,7 +100,10 @@ class ICartImpl implements ICartFacade {
   }
 
   @override
-  FutureResult<Unit> addQty(CartModel model, UserModel userModel) async {
+  FutureResult<Unit> addQty(
+    CartModel model,
+    UserModel userModel,
+  ) async {
     try {
       await firestore
           .collection(FirebaseCollection.users)

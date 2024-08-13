@@ -173,8 +173,10 @@ class ICartImpl implements ICartFacade {
           ///
           ///
           ///
-          final orderModel = MyOrderModel(
+          final orderModel = OrderModel(
             remark: cartproduct.remark,
+            isPurchase: false,
+            isUser: true,
             product: ProductModel(
               productUrl: cartproduct.productUrl,
               serialNumber: cartproduct.serialNumber,

@@ -10,7 +10,7 @@ class OrderFrame extends StatelessWidget {
     super.key,
     required this.data,
   });
-  final MyOrderModel data;
+  final OrderModel data;
   @override
   Widget build(BuildContext context) {
     return Container(

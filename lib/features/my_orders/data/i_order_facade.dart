@@ -2,7 +2,7 @@ import 'package:sree_balagi_gold/features/my_orders/data/model/my_order_model.da
 import 'package:sree_balagi_gold/general/core/typedef.dart';
 
 abstract class IOrderFacade {
-  FutureResult<List<MyOrderModel>> getOrders({required String userId}) {
+  FutureResult<List<OrderModel>> getOrders({required String userId}) {
     throw UnimplementedError('getOrders() not implimented');
   }
 

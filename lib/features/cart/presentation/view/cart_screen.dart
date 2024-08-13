@@ -11,6 +11,7 @@ import 'package:sree_balagi_gold/general/utils/app_color.dart';
 import 'package:sree_balagi_gold/general/utils/app_icons.dart';
 import 'package:sree_balagi_gold/general/widgets/confirm_dialog.dart';
 import 'package:sree_balagi_gold/general/widgets/custom_loading.dart';
+import 'package:sree_balagi_gold/general/widgets/show_progress.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({
@@ -113,9 +114,10 @@ class _CartScreenState extends State<CartScreen> {
                       onPressed: () {
                         confirmDialog(
                           context,
-                          onPressed: () {
+                          onPressed: () async {
                             EasyNavigator.pop(context);
-                            state.placedOrder(
+                            showProgress(context);
+                            await state.placedOrder(
                               context,
                               success: () {
                                 EasyNavigator.push(

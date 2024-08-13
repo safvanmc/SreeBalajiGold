@@ -10,7 +10,7 @@ import 'package:sree_balagi_gold/general/widgets/custom_toast.dart';
 class OrderProvider extends ChangeNotifier {
   final IOrderFacade iOrderFacade;
   OrderProvider(this.iOrderFacade);
-  List<MyOrderModel> orderList = [];
+  List<OrderModel> orderList = [];
   bool _isProgress = false;
   bool isLoading = true;
   bool isMoreDataLoading = true;

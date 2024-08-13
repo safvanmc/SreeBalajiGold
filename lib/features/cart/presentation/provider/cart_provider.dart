@@ -8,7 +8,6 @@ import 'package:sree_balagi_gold/features/cart/data/model/cart_model.dart';
 import 'package:sree_balagi_gold/features/category_product_display/data/model/product_model.dart';
 import 'package:sree_balagi_gold/general/service/easy_navigator.dart';
 import 'package:sree_balagi_gold/general/widgets/custom_toast.dart';
-import 'package:sree_balagi_gold/general/widgets/show_progress.dart';
 
 class CartProvider extends ChangeNotifier {
   final ICartFacade iCartFacade;
@@ -211,16 +210,16 @@ class CartProvider extends ChangeNotifier {
     required VoidCallback success,
   }) async {
     final userModel = context.read<AuthProvider>().userModel;
-    showProgress(context);
+    log(userModel!.name!);
 
     final result = await iCartFacade.placeOrder(
-      userModel!,
+      userModel,
       cartList,
     );
     result.fold(
       (l) {
         EasyNavigator.pop(context);
-        log(l.msg);
+        log('1234566${l.msg}');
         CToast.error(
           msg: l.msg,
         );

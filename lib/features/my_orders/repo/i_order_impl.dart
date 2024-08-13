@@ -14,7 +14,7 @@ class IOrderImpl implements IOrderFacade {
   QueryDocumentSnapshot<Map<String, dynamic>>? lastDoc;
   bool isMoreData = false;
   @override
-  FutureResult<List<MyOrderModel>> getOrders({required String userId}) async {
+  FutureResult<List<OrderModel>> getOrders({required String userId}) async {
     try {
       final query = firestore
           .collection(FirebaseCollection.orders)
@@ -30,7 +30,7 @@ class IOrderImpl implements IOrderFacade {
         return right(
           data.docs
               .map(
-                (e) => MyOrderModel.fromMap(
+                (e) => OrderModel.fromMap(
                   e.data(),
                 ),
               )

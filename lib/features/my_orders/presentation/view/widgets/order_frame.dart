@@ -86,13 +86,15 @@ class OrderFrame extends StatelessWidget {
                               ? 'accepted'
                               : data.orderStatus == 2
                                   ? 'deliverd'
-                                  : 'rejected',
+                                  : data.orderStatus == 4
+                                      ? 'shipped'
+                                      : 'rejected',
                       style: TextStyle(
                         color: data.orderStatus == 0
                             ? Colors.amber
                             : data.orderStatus == 1
                                 ? Colors.blue
-                                : data.orderStatus == 2
+                                : data.orderStatus == 2 || data.orderStatus == 4
                                     ? Colors.green
                                     : Colors.red,
                         fontSize: 12,

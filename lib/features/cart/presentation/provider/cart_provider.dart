@@ -108,13 +108,13 @@ class CartProvider extends ChangeNotifier {
     return total;
   }
 
-  num get totalPieces {
-    num total = 0;
-    for (var element in cartList) {
-      total = total + (element.pieces * (element.qty ?? 1));
-    }
-    return total;
-  }
+  // num get totalPieces {
+  //   num total = 0;
+  //   for (var element in cartList) {
+  //     total = total + (element.pieces * (element.qty ?? 1));
+  //   }
+  //   return total;
+  // }
 
   num totalQty(BuildContext context) {
     final userModel = context.read<AuthProvider>().userModel;
@@ -219,7 +219,6 @@ class CartProvider extends ChangeNotifier {
     result.fold(
       (l) {
         EasyNavigator.pop(context);
-        log('1234566${l.msg}');
         CToast.error(
           msg: l.msg,
         );

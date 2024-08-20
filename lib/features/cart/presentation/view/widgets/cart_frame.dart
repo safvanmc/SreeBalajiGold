@@ -38,6 +38,7 @@ class _CartFrameState extends State<CartFrame> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                const Gap(8),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -97,11 +98,11 @@ class _CartFrameState extends State<CartFrame> {
                               keyvalue: 'Net Weight(g):',
                               data: '${widget.data.netWeight}'),
                           const Gap(10),
-                          CRowWidget(
-                            keyvalue: 'Piece:',
-                            data: '${widget.data.pieces}',
-                          ),
-                          const Gap(10),
+                          // CRowWidget(
+                          //   keyvalue: 'Piece in stock:',
+                          //   data: '${widget.data.pieces}',
+                          // ),
+                          // const Gap(10),
                         ],
                       ),
                     ),

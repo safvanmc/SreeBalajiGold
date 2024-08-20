@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 import 'package:sree_balagi_gold/features/cart/presentation/provider/cart_provider.dart';
 import 'package:sree_balagi_gold/general/utils/app_color.dart';
@@ -38,6 +39,7 @@ class TotalPriceSection extends StatelessWidget {
                                 .copyWith(color: Colors.black))
                       ]),
                 ),
+                const Gap(8),
                 RichText(
                   text: TextSpan(
                       text: 'Net Weight:  ',
@@ -50,18 +52,18 @@ class TotalPriceSection extends StatelessWidget {
                                 .copyWith(color: Colors.black))
                       ]),
                 ),
-                RichText(
-                  text: TextSpan(
-                      text: 'Piece:  ',
-                      style: appTextTheme.displaySmall!.copyWith(
-                          color: const Color.fromARGB(255, 95, 94, 94)),
-                      children: [
-                        TextSpan(
-                            text: state.totalPieces.toString(),
-                            style: appTextTheme.bodyMedium!
-                                .copyWith(color: Colors.black))
-                      ]),
-                ),
+                // RichText(
+                //   text: TextSpan(
+                //       text: 'Piece:  ',
+                //       style: appTextTheme.displaySmall!.copyWith(
+                //           color: const Color.fromARGB(255, 95, 94, 94)),
+                //       children: [
+                //         TextSpan(
+                //             text: state.totalPieces.toString(),
+                //             style: appTextTheme.bodyMedium!
+                //                 .copyWith(color: Colors.black))
+                //       ]),
+                // ),
               ],
             ),
             CButton(

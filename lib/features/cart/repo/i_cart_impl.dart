@@ -196,7 +196,13 @@ class ICartImpl implements ICartFacade {
 
           ///
           ///
-          ///
+          batch.update(
+              firestore
+                  .collection(FirebaseCollection.product)
+                  .doc(orderModel.product.id),
+              {
+                'totalOrders': FieldValue.increment(1),
+              });
           batch.set(
             firestore.collection(FirebaseCollection.orders).doc(id),
             orderModel.toMap(),

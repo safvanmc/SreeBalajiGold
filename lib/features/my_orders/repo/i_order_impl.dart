@@ -26,7 +26,6 @@ class IOrderImpl implements IOrderFacade {
 
       if (data.docs.isNotEmpty) {
         lastDoc = data.docs.last;
-
         return right(
           data.docs
               .map(

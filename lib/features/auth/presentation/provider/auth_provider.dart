@@ -68,6 +68,7 @@ class AuthProvider extends ChangeNotifier {
       phoneNumber: '${AppDetails.countryCode}${phoneNumberController.text}',
       accountStatusIndex: 0,
       isBlocked: false,
+      
       name: nameController.text.trim(),
       nameKeyword: KeywordsBuilder.advanceKeywordsBuilder(
         nameController.text.trim(),

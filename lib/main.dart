@@ -109,6 +109,7 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: ToastificationWrapper(
+        config: const ToastificationConfig(itemWidth: double.infinity),
         child: MaterialApp(
           title: AppDetails.appName,
           debugShowCheckedModeBanner: false,

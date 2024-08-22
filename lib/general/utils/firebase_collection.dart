@@ -7,4 +7,5 @@ class FirebaseCollection {
   static const product = 'product';
   static const banners = 'banners';
   static const orders = 'orders';
+  static const dailyReports = 'dailyReports';
 }

@@ -26,7 +26,7 @@ class CToast {
       primaryColor: Colors.amber.shade200,
       // backgroundColor: Colors.white,
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       borderRadius: BorderRadius.circular(12),
       boxShadow: const [
         BoxShadow(
@@ -64,7 +64,7 @@ class CToast {
       primaryColor: Colors.green.shade400,
       // backgroundColor: Colors.white,
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       borderRadius: BorderRadius.circular(12),
       boxShadow: const [
         BoxShadow(
@@ -102,7 +102,7 @@ class CToast {
       primaryColor: Colors.blue.shade400,
       // backgroundColor: Colors.white,
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       borderRadius: BorderRadius.circular(12),
       boxShadow: const [
         BoxShadow(
@@ -140,7 +140,7 @@ class CToast {
       primaryColor: Colors.red.shade400,
       // backgroundColor: Colors.white,
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       borderRadius: BorderRadius.circular(12),
       boxShadow: const [
         BoxShadow(

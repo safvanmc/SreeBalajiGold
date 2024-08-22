@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
+import 'package:intl/intl.dart';
 import 'package:sree_balagi_gold/features/auth/data/model/user_model.dart';
 import 'package:sree_balagi_gold/features/cart/data/i_cart_facade.dart';
 import 'package:sree_balagi_gold/features/cart/data/model/cart_model.dart';
@@ -210,6 +211,27 @@ class ICartImpl implements ICartFacade {
           batch.update(
             firestore.collection(FirebaseCollection.users).doc(userModel.id),
             {'total_orders': FieldValue.increment(1)},
+          );
+          final date = DateTime.now();
+          final formattedDate = DateFormat('yyyy-MM-dd').format(date);
+          batch.update(
+              firestore
+                  .collection(FirebaseCollection.general)
+                  .doc(FirebaseCollection.general),
+              {
+                'totalOrders': FieldValue.increment(1),
+              });
+          batch.update(
+            firestore
+                .collection(FirebaseCollection.dailyReports)
+                .doc(formattedDate),
+            {
+              'totalOrdersToday': FieldValue.increment(1),
+              'totalGrossWeightToday':
+                  FieldValue.increment(orderModel.product.grossWeight),
+              'totalNetWeightToday':
+                  FieldValue.increment(orderModel.product.netWeight),
+            },
           );
         }
       }
